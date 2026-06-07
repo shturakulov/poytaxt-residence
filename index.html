@@ -71,15 +71,12 @@ h1,h2,h3,.serif{font-family:'Cormorant',Georgia,serif;font-weight:600;line-heigh
 .btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
 .btn-block{width:100%}
 
-/* TOP BAR — rotating attention phrases */
-.topbar{position:fixed;top:0;left:0;right:0;z-index:60;height:40px;display:flex;align-items:center;justify-content:center;
-  background:linear-gradient(90deg,var(--gold-2),var(--gold),var(--gold-2));color:#1a1305;overflow:hidden}
-.topbar__rot{position:relative;width:100%;height:100%}
-.topbar__item{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:8px;
-  font-weight:800;font-size:13px;letter-spacing:.3px;text-align:center;padding:0 38px;white-space:nowrap;
-  opacity:0;transform:translateY(8px);transition:opacity .5s ease,transform .5s ease;pointer-events:none}
-.topbar__item.is-active{opacity:1;transform:none}
-@media(max-width:520px){.topbar__item{font-size:11.5px;letter-spacing:.1px;padding:0 14px}}
+/* TOP BAR — continuous marquee of attention phrases */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:60;height:40px;display:flex;align-items:center;overflow:hidden;
+  background:linear-gradient(90deg,var(--gold-2),var(--gold),var(--gold-2));color:#1a1305;white-space:nowrap}
+.topbar__track{display:inline-block;animation:marquee 34s linear infinite;font-weight:800;font-size:13px;letter-spacing:.3px}
+.topbar__track span{margin:0 24px}
+@media(max-width:520px){.topbar__track{font-size:11.5px}.topbar__track span{margin:0 16px}}
 
 /* HEADER (scroll-aware) */
 .nav{position:fixed;top:40px;left:0;right:0;z-index:50;padding:16px 0;transition:background .35s,padding .35s,box-shadow .35s;}
@@ -95,9 +92,11 @@ h1,h2,h3,.serif{font-family:'Cormorant',Georgia,serif;font-weight:600;line-heigh
 /* HERO — A: Attention */
 .hero{position:relative;min-height:100svh;display:flex;align-items:flex-end;padding-top:128px;padding-bottom:54px;overflow:hidden}
 .hero__bg{position:absolute;inset:0;z-index:0}
-.hero__bg img{width:100%;height:100%;object-fit:cover;filter:saturate(1.06) contrast(1.03);animation:slowzoom 18s ease-out forwards}
+.hero__bg img{width:100%;height:100%;object-fit:cover;filter:saturate(1.04) contrast(1.02) brightness(.78);animation:slowzoom 18s ease-out forwards}
 @keyframes slowzoom{from{transform:scale(1.08)}to{transform:scale(1)}}
-.hero__bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(12,17,28,.6) 0%,rgba(12,17,28,.12) 30%,rgba(12,17,28,.78) 70%,var(--bg) 100%),radial-gradient(120% 80% at 18% 100%,rgba(12,17,28,.7),transparent 60%)}
+.hero__bg::after{content:"";position:absolute;inset:0;background:
+  linear-gradient(90deg,rgba(10,14,24,.92) 0%,rgba(10,14,24,.6) 42%,rgba(10,14,24,.08) 78%),
+  linear-gradient(180deg,rgba(10,14,24,.5) 0%,rgba(10,14,24,.2) 26%,rgba(10,14,24,.85) 70%,var(--bg) 100%)}
 .hero__inner{position:relative;z-index:2;width:100%}
 .hero h1{font-size:clamp(31px,6.4vw,54px);max-width:20ch;text-shadow:0 2px 30px rgba(8,11,18,.55);line-height:1.1}
 .hero h1 em{font-style:italic;color:var(--gold)}
@@ -251,13 +250,11 @@ footer a{color:var(--ivory);font-weight:600}
 </head>
 <body>
 
-<!-- TOP BAR — rotating attention phrases -->
+<!-- TOP BAR — continuous marquee of attention phrases -->
 <div class="topbar" id="topbar" aria-hidden="true">
-  <div class="topbar__rot" id="topRot">
-    <span class="topbar__item is-active">★ Президент ташаббуси билан реновация бўлаётган массив</span>
-    <span class="topbar__item">★ Биринчи 100 хонадонга 100 млн сўмгача чегирма</span>
-    <span class="topbar__item">★ Самарқанд марказида замонавий, ҳужжатлари тўлиқ уй</span>
-    <span class="topbar__item">★ Ариза қолдиринг — нарх ва шартларни биринчилардан билинг</span>
+  <div class="topbar__track">
+    <span>★ Президент ташаббуси билан барпо этилаётган замонавий мажмуа</span><span>★ Биринчи 100 харидорга 100 млн сўмгача чегирма</span><span>★ Фоизсиз 60 ойгача бўлиб тўлаш</span><span>★ Ҳужжатлар 100% тўлиқ — харидингиз кафолатланган</span><span>★ Самарқанд марказида ўз хонадонингиз</span>
+    <span>★ Президент ташаббуси билан барпо этилаётган замонавий мажмуа</span><span>★ Биринчи 100 харидорга 100 млн сўмгача чегирма</span><span>★ Фоизсиз 60 ойгача бўлиб тўлаш</span><span>★ Ҳужжатлар 100% тўлиқ — харидингиз кафолатланган</span><span>★ Самарқанд марказида ўз хонадонингиз</span>
   </div>
 </div>
 
@@ -276,7 +273,7 @@ footer a{color:var(--ivory);font-weight:600}
   <div class="hero__bg"><img src="assets/hero.jpg" alt="Poytaxt Residence"></div>
   <div class="wrap hero__inner">
     <h1 class="reveal">Президентимиз ташаббуси билан реновация бўлаётган массивдан <em>хонадонли бўлинг!</em></h1>
-    <p class="hero__sub reveal" style="transition-delay:.1s">Самарқанд марказида, ҳужжатлари тўлиқ замонавий хонадон — қурилиш бошидаги энг паст нархда. Биринчи 100 харидорга <b class="gold">100 млн сўмгача чегирма</b>.</p>
+    <p class="hero__sub reveal" style="transition-delay:.1s">Самарқанд марказидан ўзингизга мос хонадон топа олмаяпсизми? <b class="gold">Poytaxt Residence</b> билан танишиб кўринг.</p>
     <div class="hero__cta reveal" style="transition-delay:.16s">
       <button class="btn btn-gold" onclick="scrollToForm()">Чегирмали нархни олиш</button>
       <a class="btn btn-ghost" href="#gallery">Лойиҳани кўриш</a>
@@ -298,17 +295,6 @@ footer a{color:var(--ivory);font-weight:600}
 <!-- ===================== I — INTEREST ===================== -->
 <section class="section">
   <div class="wrap">
-    <span class="snum reveal">01 — НИМА ОЛАСИЗ</span>
-    <h2 class="reveal">Шунчаки хонадон эмас —<br><span class="gold">яхлит маҳалла</span></h2>
-    <p class="lead reveal">Самарқанд вокзали ортидаги ҳудуд Президент ташаббуси билан тубдан янгиланиб, ўрнида замонавий турар-жой мажмуаси барпо этилмоқда. Сиз эса унинг марказидан жой оласиз.</p>
-
-    <div class="stats">
-      <div class="stat reveal"><div class="num">12</div><div class="lbl">турар-жой блоки</div></div>
-      <div class="stat reveal" style="transition-delay:.06s"><div class="num">16</div><div class="lbl">қаватгача</div></div>
-      <div class="stat reveal" style="transition-delay:.12s"><div class="num">4</div><div class="lbl">хонадон тури</div></div>
-      <div class="stat reveal" style="transition-delay:.18s"><div class="num">100</div><div class="lbl">млн сўмгача чегирма</div></div>
-    </div>
-
     <div class="feat">
       <div class="feat__item reveal"><div class="feat__ic">🌳</div><div><h3>Яшил, хавфсиз ҳовли</h3><p>Машина кирмайдиган ички боғ, фонтан ва болалар майдончаси — фарзандингиз бемалол ўйнайди.</p></div></div>
       <div class="feat__item reveal" style="transition-delay:.05s"><div class="feat__ic">🛍️</div><div><h3>Кундалик ҳаёт — бино остида</h3><p>Дўкон, дорихона, хизматлар бир қаватда. Кўп нарса учун уйдан узоққа боришингиз шарт эмас.</p></div></div>
@@ -321,14 +307,14 @@ footer a{color:var(--ivory);font-weight:600}
 <!-- WHY HERE — investment -->
 <section class="section why">
   <div class="wrap">
-    <span class="snum reveal">02 — НЕГА АЙНАН ҲОЗИР</span>
+    <span class="snum reveal">01 — НЕГА АЙНАН ҲОЗИР</span>
     <h2 class="reveal">Бугунги нарх —<br><span class="gold">энг арзон нарх</span></h2>
-    <p class="lead reveal">Қурилиш қанча олдинга кетса, нарх шунча ошади. Ҳозир — лойиҳанинг энг бошланғич, демак энг қулай босқичи. Кейинроқ бу нархни тополмайсиз.</p>
+    <p class="lead reveal">Қурилиш қанча олдинга кетса, нарх шунча ошади. Кейинроқ бу нархни тополмайсиз.</p>
     <div class="why__grid">
-      <div class="why__card reveal"><div class="k">7.5 млн</div><h3>м² бошланғич нарх</h3><p>Қурилиш босқичидаги нарх — тайёр уйникидан анча паст.</p></div>
-      <div class="why__card reveal" style="transition-delay:.06s"><div class="k">100 млн</div><h3>сўмгача чегирма</h3><p>Фақат биринчи 100 хонадонга амал қилади.</p></div>
-      <div class="why__card reveal" style="transition-delay:.12s"><div class="k">100%</div><h3>Расмий ҳужжатлар</h3><p>Барча рухсат ва ҳужжатлар тўлиқ. Харидингиз хавфсиз.</p></div>
-      <div class="why__card reveal" style="transition-delay:.18s"><div class="k">↑</div><h3>Ўсиб борувчи қиймат</h3><p>Ўзингиз яшайсиз ёки даромад учун сақлайсиз — қиймати ошиб боради.</p></div>
+      <div class="why__card reveal"><div class="k">7.5 млн</div><h3>м²дан бошланади</h3><p>Тайёр квартирага қараганда анча арзон. Қурилиш битгач, бундай нарх қолмайди.</p></div>
+      <div class="why__card reveal" style="transition-delay:.06s"><div class="k">100 млн</div><h3>сўмгача тежайсиз</h3><p>Фақат биринчи 100 харидорга. Кейингилари тўлиқ нархда олади.</p></div>
+      <div class="why__card reveal" style="transition-delay:.12s"><div class="k">60 ой</div><h3>фоизсиз бўлиб тўлаш</h3><p>Бирваракайига катта пул шарт эмас — қулай ойлик тўловлар билан оласиз.</p></div>
+      <div class="why__card reveal" style="transition-delay:.18s"><div class="k">100%</div><h3>ҳужжатлар тўлиқ</h3><p>Барча рухсатнома расман тайёр. Хотиржам, кафолатли харид қиласиз.</p></div>
     </div>
   </div>
 </section>
@@ -336,39 +322,15 @@ footer a{color:var(--ivory);font-weight:600}
 <!-- GALLERY -->
 <section class="section" style="padding-top:0">
   <div class="wrap">
-    <span class="snum reveal">03 — КЎРИНИШ</span>
+    <span class="snum reveal">02 — КЎРИНИШ</span>
     <h2 class="reveal">Лойиҳа қандай кўринади</h2>
     <p class="lead reveal">Тасаввур қилинг — мана шу ҳовлида эртанги кунингиз бошланади.</p>
     <div class="gallery" id="gallery">
-      <figure class="span2 reveal"><img src="assets/facade.jpg" alt="Кечки фасад"><figcaption>Кечки фасад</figcaption></figure>
-      <figure class="reveal"><img src="assets/courtyard.jpg" alt="Ички ҳовли"><figcaption>Ички ҳовли</figcaption></figure>
-      <figure class="reveal"><img src="assets/amenities.jpg" alt="Терраса ва лобби"><figcaption>Терраса · лобби</figcaption></figure>
-      <figure class="reveal"><img src="assets/exterior2.jpg" alt="Мажмуа"><figcaption>Мажмуа</figcaption></figure>
-      <figure class="reveal"><img src="assets/courtyard2.jpg" alt="Ободонлаштириш"><figcaption>Ободонлаштириш</figcaption></figure>
-    </div>
-  </div>
-</section>
-
-<!-- ===================== D — DESIRE ===================== -->
-<section class="section" id="offer" style="padding-top:0">
-  <div class="wrap">
-    <span class="snum reveal">04 — ТАКЛИФ</span>
-    <h2 class="reveal">Биринчи 100 харидорга <span class="gold">махсус таклиф</span></h2>
-    <p class="lead reveal">Ҳозир ариза қолдирсангиз: бозордан паст нарх, 100 млн сўмгача чегирма ва ўзингизга мос тўлов режаси. Жойлар чекланган — тугаши билан таклиф ёпилади.</p>
-
-    <!-- OFFER -->
-    <div class="offer reveal">
-      <span class="tag">Чекланган таклиф</span>
-      <h2>Биринчи <span class="gold">100 хонадон</span></h2>
-      <p>Шу 100 тадан бирини банд қилсангиз — <b style="color:var(--ivory)">100 млн сўмгача</b> тежайсиз ва нархни ҳозирги даражада қотирасиз.</p>
-      <div class="countdown" id="cd">
-        <div class="cd"><b data-d>00</b><span>кун</span></div>
-        <div class="cd"><b data-h>00</b><span>соат</span></div>
-        <div class="cd"><b data-m>00</b><span>дақиқа</span></div>
-        <div class="cd"><b data-s>00</b><span>сония</span></div>
-      </div>
-      <div class="progress"><div class="bar"><i></i></div><div class="lbl"><span>Банд қилинган</span><span><b>63</b> / 100 хонадон</span></div></div>
-      <button class="btn btn-gold btn-block" style="margin-top:24px" onclick="scrollToForm()">Ўз хонадонимни банд қиламан →</button>
+      <figure class="span2 reveal"><img src="assets/courtyard2.jpg" alt="Ички боғ ва фонтан"><figcaption>Ички боғ ва фонтан</figcaption></figure>
+      <figure class="reveal"><img src="assets/facade.jpg" alt="Кечки фасад"><figcaption>Кечки фасад</figcaption></figure>
+      <figure class="reveal"><img src="assets/gallery2.jpg" alt="Умумий кўриниш"><figcaption>Умумий кўриниш</figcaption></figure>
+      <figure class="reveal"><img src="assets/gallery1.jpg" alt="Замонавий фасад"><figcaption>Замонавий фасад</figcaption></figure>
+      <figure class="reveal"><img src="assets/exterior2.jpg" alt="Кириш ва дўконлар"><figcaption>Кириш ва дўконлар</figcaption></figure>
     </div>
   </div>
 </section>
@@ -376,8 +338,8 @@ footer a{color:var(--ivory);font-weight:600}
 <!-- STEPS -->
 <section class="section" style="padding-top:0">
   <div class="wrap">
-    <span class="snum reveal">05 — ҚАНДАЙ</span>
-    <h2 class="reveal">Уч қадамда — <span class="gold">ўз уйингизга</span></h2>
+    <span class="snum reveal">03 — ҚАНДАЙ</span>
+    <h2 class="reveal">Уч қадамда <span class="gold">хонадонли бўлинг</span></h2>
     <div class="steps">
       <div class="step reveal"><div><h3>Ариза қолдиринг</h3><p>Исм ва телефонни ёзинг — 1 дақиқа етади.</p></div></div>
       <div class="step reveal" style="transition-delay:.06s"><div><h3>Менежер қўнғироқ қилади</h3><p>Бўш хонадонлар, нарх ва тўлов режасини тушунтиради. Хоҳласангиз, кўрикка ёзиламиз.</p></div></div>
@@ -389,11 +351,11 @@ footer a{color:var(--ivory);font-weight:600}
 <!-- FAQ -->
 <section class="section" style="padding-top:0">
   <div class="wrap">
-    <span class="snum reveal">06 — САВОЛ-ЖАВОБ</span>
-    <h2 class="reveal">Кўнгилда қолиши мумкин бўлган саволлар</h2>
+    <span class="snum reveal">04 — САВОЛ-ЖАВОБ</span>
+    <h2 class="reveal">Кўп бериладиган саволлар</h2>
     <div class="faq">
       <div class="qa reveal"><button class="qa__q">Лойиҳа ишончлими, ҳужжатлар жойидами?<span>+</span></button><div class="qa__a"><p>Ҳа. Қурилиш расман олиб борилмоқда, барча ҳужжат ва рухсатлар тўлиқ. Учрашувда уларни ўз кўзингиз билан кўрасиз.</p></div></div>
-      <div class="qa reveal"><button class="qa__q">Тўловни қандай қилса бўлади?<span>+</span></button><div class="qa__a"><p>Бир йўла ёки бўлиб-бўлиб — бир нечта режа бор. Сизга мос келадиганини менежер танлашга ёрдам беради.</p></div></div>
+      <div class="qa reveal"><button class="qa__q">Тўловни қандай қилса бўлади?<span>+</span></button><div class="qa__a"><p>Фоизсиз 60 ойгача бўлиб тўлаш мумкин. Сизга мос тўлов режасини менежер танлашга ёрдам беради.</p></div></div>
       <div class="qa reveal"><button class="qa__q">Чегирма ростдан 100 млн сўмгача борми?<span>+</span></button><div class="qa__a"><p>Ҳа, лекин фақат биринчи 100 хонадонга. Жойлар тугаши билан таклиф ёпилади.</p></div></div>
       <div class="qa reveal"><button class="qa__q">Қаерда жойлашган?<span>+</span></button><div class="qa__a"><p>Самарқанд, вокзал орти — янги шаҳарча маркази. Аниқ манзилни менежер боғланганда юборади.</p></div></div>
     </div>
@@ -407,13 +369,12 @@ footer a{color:var(--ivory);font-weight:600}
       <div class="form-body" id="formBody">
         <span class="eyebrow" style="display:flex;justify-content:center">Ариза қолдиринг</span>
         <h2>Чегирмали нархни<br>биринчилардан билинг</h2>
-        <p class="lead">Исм ва телефонни қолдиринг — менежеримиз қўнғироқ қилиб, бўш хонадонлар ва нархни айтади. Ҳеч қандай мажбурият йўқ.</p>
+        <p class="lead">Исм ва телефонни қолдиринг — менежеримиз қўнғироқ қилиб, бўш хонадонлар, нарх ва чегирмани айтади.</p>
         <form id="leadForm" novalidate>
           <div class="field"><label for="name">Исмингиз</label><input type="text" id="name" name="name" placeholder="Масалан: Жасур" autocomplete="given-name" required></div>
           <div class="field"><label for="phone">Телефон рақам</label><input type="tel" id="phone" name="phone" placeholder="+998 90 123 45 67" inputmode="tel" autocomplete="tel" required></div>
-          <button type="submit" class="btn btn-gold btn-block" id="submitBtn">Чегирмали нархни олиш</button>
+          <button type="submit" class="btn btn-gold btn-block" id="submitBtn">Ҳа, чегирмани истайман →</button>
           <div class="form-msg" id="formMsg"></div>
-          <p class="consent">Маълумотларингиз фақат шу лойиҳа бўйича боғланиш учун ишлатилади. Спам йўқ.</p>
         </form>
         <div class="trust-row">
           <span>🔒 Маълумот хавфсиз</span><span>⏱ 24 соат ичида қўнғироқ</span><span>🎁 Чегирма кафолати</span>
@@ -445,8 +406,7 @@ footer a{color:var(--ivory);font-weight:600}
 <script>
 /* ===== CONFIG ===== */
 const CONFIG = {
-  APPS_SCRIPT_URL: "PASTE_APPS_SCRIPT_URL_HERE",  // 2-босқич деплойдан кейин қўйилади
-  DEADLINE: "2026-07-15T23:59:59"
+  APPS_SCRIPT_URL: "PASTE_APPS_SCRIPT_URL_HERE"  // 2-босқич деплойдан кейин қўйилади
 };
 
 /* ===== Telegram Mini App ===== */
@@ -494,18 +454,9 @@ form.addEventListener("submit",async function(e){
     document.getElementById("sticky").classList.add("hide");
   }catch(err){
     msg.textContent="Хатолик юз берди. Илтимос, қайта уриниб кўринг."; msg.classList.add("bad");
-    btn.disabled=false; btn.textContent="Аризани юбориш";
+    btn.disabled=false; btn.textContent="Ҳа, чегирмани истайман →";
   }
 });
-
-/* ===== Countdown ===== */
-(function(){
-  const end=new Date(CONFIG.DEADLINE).getTime();
-  const el={d:document.querySelector("[data-d]"),h:document.querySelector("[data-h]"),m:document.querySelector("[data-m]"),s:document.querySelector("[data-s]")};
-  const pad=n=>String(n).padStart(2,"0");
-  function tick(){let t=end-Date.now();if(t<0)t=0;el.d.textContent=pad(Math.floor(t/864e5));el.h.textContent=pad(Math.floor(t%864e5/36e5));el.m.textContent=pad(Math.floor(t%36e5/6e4));el.s.textContent=pad(Math.floor(t%6e4/1e3));}
-  tick(); setInterval(tick,1000);
-})();
 
 /* ===== UI: nav, reveal, sticky, faq, lightbox ===== */
 function scrollToForm(){document.getElementById("lead").scrollIntoView({behavior:"smooth"});setTimeout(()=>document.getElementById("name").focus({preventScroll:true}),600);}
@@ -519,18 +470,6 @@ document.querySelectorAll(".reveal").forEach(el=>io.observe(el));
 new IntersectionObserver(es=>es.forEach(en=>document.getElementById("sticky").classList.toggle("hide",en.isIntersecting)),{threshold:.25}).observe(document.getElementById("lead"));
 
 document.querySelectorAll(".qa__q").forEach(q=>q.addEventListener("click",()=>q.parentElement.classList.toggle("open")));
-
-/* ===== Top bar rotating phrases ===== */
-(function(){
-  const items=[...document.querySelectorAll("#topRot .topbar__item")];
-  if(items.length<2)return;
-  let i=0;
-  setInterval(()=>{
-    items[i].classList.remove("is-active");
-    i=(i+1)%items.length;
-    items[i].classList.add("is-active");
-  },3200);
-})();
 
 const lb=document.getElementById("lb"),lbimg=document.getElementById("lbimg");
 document.querySelectorAll("#gallery img").forEach(im=>im.addEventListener("click",()=>{lbimg.src=im.src;lb.classList.add("show");}));
