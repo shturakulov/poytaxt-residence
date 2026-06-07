@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="uz-Cyrl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Poytaxt Residence — Самарқандда замонавий турар-жой мажмуаси</title>
+<meta name="description" content="Самарқанд марказида Президент ташаббуси билан барпо этилаётган замонавий хонадонлар. Биринчи 100 хонадонга 100 млн сўмгача чегирма. Ҳужжатлар тўлиқ.">
+<meta property="og:title" content="Poytaxt Residence — Янги шаҳарда ўз уйингиз">
+<meta property="og:description" content="м² 7.5 млн сўмдан. Биринчи 100 хонадонга 100 млн сўмгача чегирма.">
+<meta property="og:type" content="website">
+
+<!-- Telegram Mini App SDK -->
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,400;0,500;0,600;0,700;1,500;1,600&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   POYTAXT RESIDENCE — landing page styles
+   ============================================================ */
+:root{
+  --bg:#0C111C;
+  --bg-2:#111827;
+  --bg-3:#172033;
+  --line:rgba(214,176,94,.16);
+  --line-2:rgba(244,239,230,.08);
+  --ivory:#F6F1E9;
+  --muted:#AEB7CB;
+  --gold:#DCB867;
+  --gold-2:#C9A24B;
+  --gold-soft:rgba(220,184,103,.10);
+  --maxw:1200px;
+  --r:18px;
+  font-synthesis:none;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  background:var(--bg);color:var(--ivory);
+  font-family:'Manrope',system-ui,sans-serif;line-height:1.62;
+  overflow-x:hidden;font-weight:400;letter-spacing:.1px;position:relative;
+  font-size:16.5px;-webkit-font-smoothing:antialiased;
+}
+/* subtle grain */
+body::before{
+  content:"";position:fixed;inset:0;z-index:9999;pointer-events:none;opacity:.035;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+h1,h2,h3,.serif{font-family:'Cormorant',Georgia,serif;font-weight:600;line-height:1.06;letter-spacing:.2px}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 20px}
+.gold{color:var(--gold)}
+
+.eyebrow{display:inline-flex;align-items:center;gap:9px;font-size:12px;font-weight:700;letter-spacing:2.6px;text-transform:uppercase;color:var(--gold)}
+.eyebrow::before{content:"";width:28px;height:1px;background:var(--gold);opacity:.7}
+.snum{font-family:'Manrope';font-size:12px;font-weight:700;letter-spacing:2px;color:var(--gold);opacity:.55}
+
+.section{padding:80px 0;position:relative}
+.section h2{font-size:clamp(31px,7.2vw,56px);margin:14px 0 12px}
+.lead{color:var(--muted);font-size:17px;line-height:1.65;max-width:600px}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;padding:16px 26px;border-radius:999px;border:none;cursor:pointer;font-family:'Manrope';font-weight:700;font-size:15.5px;letter-spacing:.3px;transition:transform .25s,box-shadow .25s,background .25s,border-color .25s;-webkit-tap-highlight-color:transparent}
+.btn-gold{background:linear-gradient(135deg,var(--gold),var(--gold-2));color:#1a1305;box-shadow:0 12px 34px -10px rgba(220,184,103,.6)}
+.btn-gold:hover{transform:translateY(-2px);box-shadow:0 18px 44px -12px rgba(220,184,103,.7)}
+.btn-gold:active{transform:scale(.97)}
+.btn-ghost{background:transparent;color:var(--ivory);border:1px solid var(--line)}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
+.btn-block{width:100%}
+
+/* TOP BAR — rotating attention phrases */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:60;height:40px;display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(90deg,var(--gold-2),var(--gold),var(--gold-2));color:#1a1305;overflow:hidden}
+.topbar__rot{position:relative;width:100%;height:100%}
+.topbar__item{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:8px;
+  font-weight:800;font-size:13px;letter-spacing:.3px;text-align:center;padding:0 38px;white-space:nowrap;
+  opacity:0;transform:translateY(8px);transition:opacity .5s ease,transform .5s ease;pointer-events:none}
+.topbar__item.is-active{opacity:1;transform:none}
+@media(max-width:520px){.topbar__item{font-size:11.5px;letter-spacing:.1px;padding:0 14px}}
+
+/* HEADER (scroll-aware) */
+.nav{position:fixed;top:40px;left:0;right:0;z-index:50;padding:16px 0;transition:background .35s,padding .35s,box-shadow .35s;}
+.nav.scrolled{background:rgba(12,17,28,.82);backdrop-filter:blur(14px);padding:11px 0;box-shadow:0 1px 0 var(--line-2)}
+.nav__row{display:flex;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:10px;font-family:'Cormorant';font-weight:700;font-size:21px;letter-spacing:.5px}
+.brand .mark{width:36px;height:36px;border-radius:9px;flex:none;background:linear-gradient(135deg,var(--gold),var(--gold-2));display:grid;place-items:center;color:#15100a;font-weight:800;font-family:'Manrope';font-size:14px}
+.brand small{display:block;font-family:'Manrope';font-size:8.5px;letter-spacing:2px;color:var(--gold);text-transform:uppercase;margin-top:-2px}
+.nav__cta{display:flex;align-items:center;gap:14px}
+.nav .btn{padding:11px 20px;font-size:14px}
+@media(max-width:620px){.nav .btn-gold{display:none}}
+
+/* HERO — A: Attention */
+.hero{position:relative;min-height:100svh;display:flex;align-items:flex-end;padding-top:128px;padding-bottom:54px;overflow:hidden}
+.hero__bg{position:absolute;inset:0;z-index:0}
+.hero__bg img{width:100%;height:100%;object-fit:cover;filter:saturate(1.06) contrast(1.03);animation:slowzoom 18s ease-out forwards}
+@keyframes slowzoom{from{transform:scale(1.08)}to{transform:scale(1)}}
+.hero__bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(12,17,28,.6) 0%,rgba(12,17,28,.12) 30%,rgba(12,17,28,.78) 70%,var(--bg) 100%),radial-gradient(120% 80% at 18% 100%,rgba(12,17,28,.7),transparent 60%)}
+.hero__inner{position:relative;z-index:2;width:100%}
+.hero h1{font-size:clamp(31px,6.4vw,54px);max-width:20ch;text-shadow:0 2px 30px rgba(8,11,18,.55);line-height:1.1}
+.hero h1 em{font-style:italic;color:var(--gold)}
+.hero__sub{margin:22px 0 30px;font-size:clamp(15.5px,4.3vw,19px);color:#EFE8DB;max-width:40ch;font-weight:500;line-height:1.55;text-shadow:0 1px 18px rgba(8,11,18,.5)}
+.hero__cta{display:flex;flex-wrap:wrap;gap:12px}
+.hero__chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:26px}
+.chip{font-size:12.5px;font-weight:600;padding:9px 14px;border-radius:999px;background:rgba(245,240,231,.06);border:1px solid var(--line);backdrop-filter:blur(6px);display:inline-flex;align-items:center;gap:6px}
+.chip b{color:var(--gold)}
+.scrolldown{position:absolute;left:50%;bottom:22px;transform:translateX(-50%);z-index:2;color:var(--muted);font-size:11px;letter-spacing:2px;text-transform:uppercase;display:flex;flex-direction:column;align-items:center;gap:7px;animation:bob 2s ease-in-out infinite}
+.scrolldown i{width:1px;height:30px;background:linear-gradient(var(--gold),transparent)}
+@keyframes bob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(7px)}}
+
+/* STRIP */
+.strip{background:var(--gold);color:#1a1305;overflow:hidden;white-space:nowrap;padding:12px 0;font-weight:700;font-size:13.5px;letter-spacing:.4px;position:relative;z-index:3}
+.strip__track{display:inline-block;animation:marquee 24s linear infinite}
+.strip__track span{margin:0 26px}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* STATS */
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:30px}
+.stat{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r);padding:24px 18px;position:relative;overflow:hidden}
+.stat::after{content:"";position:absolute;top:0;left:0;width:100%;height:2px;background:linear-gradient(90deg,var(--gold),transparent);opacity:.6}
+.stat .num{font-family:'Cormorant';font-size:46px;font-weight:700;color:var(--gold);line-height:1}
+.stat .lbl{font-size:13px;color:var(--muted);margin-top:8px}
+
+/* FEATURE */
+.feat{display:grid;gap:16px;margin-top:32px}
+.feat__item{display:flex;gap:15px;align-items:flex-start;background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r);padding:22px;transition:border-color .3s,transform .3s}
+.feat__item:hover{border-color:var(--gold);transform:translateY(-3px)}
+.feat__ic{width:48px;height:48px;border-radius:13px;flex:none;display:grid;place-items:center;background:var(--gold-soft);border:1px solid var(--line);font-size:23px}
+.feat__item h3{font-family:'Manrope';font-size:16.5px;font-weight:700;margin-bottom:4px}
+.feat__item p{font-size:14px;color:var(--muted)}
+
+/* WHY / investment */
+.why{background:linear-gradient(180deg,var(--bg),var(--bg-2))}
+.why__grid{display:grid;gap:14px;margin-top:30px}
+.why__card{background:var(--bg-3);border:1px solid var(--line);border-radius:var(--r);padding:26px;position:relative;overflow:hidden}
+.why__card .k{font-family:'Cormorant';font-size:40px;font-weight:700;color:var(--gold);line-height:1}
+.why__card h3{font-family:'Manrope';font-size:16px;font-weight:700;margin:12px 0 6px}
+.why__card p{font-size:14px;color:var(--muted)}
+
+/* GALLERY */
+.gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:28px}
+.gallery figure{position:relative;border-radius:14px;overflow:hidden;border:1px solid var(--line);cursor:pointer}
+.gallery img{aspect-ratio:4/3;width:100%;object-fit:cover;transition:transform .6s ease}
+.gallery figure:hover img{transform:scale(1.06)}
+.gallery .span2{grid-column:span 2}
+.gallery .span2 img{aspect-ratio:16/9}
+.gallery figcaption{position:absolute;left:12px;bottom:11px;font-size:12px;font-weight:600;background:rgba(12,17,28,.62);backdrop-filter:blur(6px);padding:6px 12px;border-radius:999px}
+
+/* TYPES — D: Desire */
+.types{display:grid;gap:14px;margin-top:30px}
+.type{background:linear-gradient(180deg,var(--bg-3),var(--bg-2));border:1px solid var(--line);border-radius:var(--r);padding:24px;position:relative;overflow:hidden;transition:border-color .3s,transform .3s}
+.type:hover{border-color:var(--gold);transform:translateY(-3px)}
+.type::before{content:"";position:absolute;top:-30px;right:-30px;width:130px;height:130px;border-radius:50%;background:var(--gold-soft)}
+.type .t-top{display:flex;justify-content:space-between;align-items:baseline;gap:10px;position:relative}
+.type h3{font-family:'Manrope';font-size:19px;font-weight:800}
+.type .area{font-size:13px;color:var(--muted);margin-top:3px}
+.type .price{font-family:'Cormorant';font-size:31px;font-weight:700;color:var(--gold);white-space:nowrap}
+.type .price small{font-family:'Manrope';font-size:12px;color:var(--muted);font-weight:500;display:block;text-align:right}
+.type ul{list-style:none;margin-top:16px;display:flex;flex-wrap:wrap;gap:8px;position:relative}
+.type li{font-size:12px;color:var(--muted);border:1px solid var(--line);padding:5px 11px;border-radius:999px}
+
+/* STEPS */
+.steps{display:grid;gap:14px;margin-top:30px;counter-reset:s}
+.step{display:flex;gap:16px;align-items:flex-start;background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r);padding:22px;counter-increment:s}
+.step::before{content:counter(s);font-family:'Cormorant';font-weight:700;font-size:30px;color:var(--gold);width:46px;height:46px;flex:none;display:grid;place-items:center;border:1px solid var(--gold);border-radius:50%}
+.step h3{font-family:'Manrope';font-size:16.5px;font-weight:700;margin-bottom:3px}
+.step p{font-size:14px;color:var(--muted)}
+
+/* OFFER */
+.offer{margin-top:34px;border-radius:26px;padding:34px 24px;text-align:center;background:radial-gradient(120% 130% at 50% 0%,rgba(220,184,103,.2),transparent 60%),var(--bg-2);border:1px solid var(--gold)}
+.offer .tag{display:inline-block;background:var(--gold);color:#1a1305;font-weight:800;font-size:11.5px;letter-spacing:1.6px;text-transform:uppercase;padding:7px 15px;border-radius:999px}
+.offer h2{font-size:clamp(28px,7.5vw,48px);margin:18px 0 8px}
+.offer p{color:var(--muted);max-width:36ch;margin:0 auto}
+.countdown{display:flex;justify-content:center;gap:10px;margin:26px 0}
+.cd{background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:13px 4px;min-width:68px}
+.cd b{font-family:'Cormorant';font-size:36px;font-weight:700;color:var(--gold);display:block;line-height:1}
+.cd span{font-size:11px;color:var(--muted);letter-spacing:.5px}
+.progress{max-width:360px;margin:8px auto 0}
+.progress .bar{height:10px;border-radius:999px;background:var(--bg-3);overflow:hidden;border:1px solid var(--line)}
+.progress .bar i{display:block;height:100%;background:linear-gradient(90deg,var(--gold-2),var(--gold));width:63%;transition:width 1.2s ease}
+.progress .lbl{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:9px}
+.progress .lbl b{color:var(--ivory)}
+
+/* FAQ */
+.faq{margin-top:30px;display:grid;gap:12px}
+.qa{background:var(--bg-2);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.qa__q{width:100%;text-align:left;background:none;border:none;color:var(--ivory);font-family:'Manrope';font-weight:700;font-size:16px;padding:20px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:14px}
+.qa__q span{color:var(--gold);font-size:24px;transition:transform .3s;flex:none}
+.qa__a{max-height:0;overflow:hidden;transition:max-height .4s ease;color:var(--muted);font-size:14.5px}
+.qa__a p{padding:0 20px 20px}
+.qa.open .qa__a{max-height:240px}
+.qa.open .qa__q span{transform:rotate(45deg)}
+
+/* LEAD FORM — A: Action */
+.lead-sec{background:linear-gradient(180deg,var(--bg-2),var(--bg));padding-bottom:128px}
+.form-card{background:var(--bg-3);border:1px solid var(--gold);border-radius:26px;padding:30px 22px;box-shadow:0 36px 90px -46px rgba(220,184,103,.46)}
+.form-card h2{font-size:clamp(27px,6.6vw,40px);text-align:center}
+.form-card .lead{text-align:center;margin:8px auto 24px}
+.field{margin-bottom:14px}
+.field label{display:block;font-size:13px;font-weight:600;margin-bottom:7px}
+.field input{width:100%;padding:16px;border-radius:13px;font-size:16px;font-family:'Manrope';background:var(--bg);border:1px solid var(--line);color:var(--ivory);outline:none;transition:border .2s,box-shadow .2s}
+.field input::placeholder{color:#5d6783}
+.field input:focus{border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-soft)}
+.field input.err{border-color:#e06a6a;box-shadow:0 0 0 3px rgba(224,106,106,.15)}
+.consent{font-size:11.5px;color:var(--muted);text-align:center;margin-top:13px;line-height:1.5}
+.form-msg{text-align:center;font-size:14px;font-weight:600;margin-top:12px;min-height:20px}
+.form-msg.bad{color:#e88}
+.trust-row{display:flex;justify-content:center;gap:18px;flex-wrap:wrap;margin-top:22px;font-size:12.5px;color:var(--muted)}
+.trust-row span{display:inline-flex;align-items:center;gap:6px}
+.success{display:none;text-align:center;padding:14px 4px}
+.success .ico{width:74px;height:74px;border-radius:50%;margin:0 auto 18px;display:grid;place-items:center;background:var(--gold-soft);border:1px solid var(--gold);font-size:36px;animation:pop .5s ease}
+@keyframes pop{0%{transform:scale(0)}70%{transform:scale(1.15)}100%{transform:scale(1)}}
+.success h3{font-family:'Cormorant';font-size:32px;color:var(--gold)}
+.success p{color:var(--muted);margin-top:7px;font-size:14px}
+.success.show{display:block}
+.form-body.hide{display:none}
+
+/* FOOTER */
+footer{padding:44px 0;border-top:1px solid var(--line);text-align:center;color:var(--muted);font-size:13px}
+footer .links{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;margin:16px 0}
+footer a{color:var(--ivory);font-weight:600}
+
+/* STICKY mobile CTA */
+.sticky{position:fixed;left:0;right:0;bottom:0;z-index:40;padding:12px 16px calc(12px + env(safe-area-inset-bottom));background:linear-gradient(180deg,rgba(12,17,28,0),var(--bg) 40%);display:flex;gap:10px;transition:transform .35s ease}
+.sticky.hide{transform:translateY(130%)}
+
+/* LIGHTBOX */
+.lb{position:fixed;inset:0;z-index:200;background:rgba(8,11,18,.94);display:none;align-items:center;justify-content:center;padding:20px}
+.lb.show{display:flex}
+.lb img{max-width:100%;max-height:86vh;border-radius:12px;border:1px solid var(--line)}
+.lb__x{position:absolute;top:18px;right:20px;font-size:30px;color:var(--ivory);cursor:pointer;line-height:1}
+
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
+.reveal.in{opacity:1;transform:none}
+
+@media(min-width:760px){
+  .stats{grid-template-columns:repeat(4,1fr)}
+  .feat,.why__grid{grid-template-columns:repeat(2,1fr)}
+  .types{grid-template-columns:repeat(2,1fr)}
+  .gallery{grid-template-columns:repeat(3,1fr)}
+  .steps{grid-template-columns:repeat(3,1fr)}
+  .form-card{max-width:580px;margin:0 auto;padding:44px}
+  .sticky{display:none}
+  .lead-sec{padding-bottom:80px}
+  .hero{padding-bottom:72px}
+}
+@media(min-width:980px){.why__grid{grid-template-columns:repeat(4,1fr)}}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR — rotating attention phrases -->
+<div class="topbar" id="topbar" aria-hidden="true">
+  <div class="topbar__rot" id="topRot">
+    <span class="topbar__item is-active">★ Президент ташаббуси билан реновация бўлаётган массив</span>
+    <span class="topbar__item">★ Биринчи 100 хонадонга 100 млн сўмгача чегирма</span>
+    <span class="topbar__item">★ Самарқанд марказида замонавий, ҳужжатлари тўлиқ уй</span>
+    <span class="topbar__item">★ Ариза қолдиринг — нарх ва шартларни биринчилардан билинг</span>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <div class="wrap nav__row">
+    <div class="brand"><span class="mark">PR</span><span>Poytaxt Residence<small>Замонавий турар-жой</small></span></div>
+    <div class="nav__cta">
+      <button class="btn btn-gold" onclick="scrollToForm()">Ариза қолдириш</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ===================== A — ATTENTION ===================== -->
+<header class="hero">
+  <div class="hero__bg"><img src="assets/hero.jpg" alt="Poytaxt Residence"></div>
+  <div class="wrap hero__inner">
+    <h1 class="reveal">Президентимиз ташаббуси билан реновация бўлаётган массивдан <em>хонадонли бўлинг!</em></h1>
+    <p class="hero__sub reveal" style="transition-delay:.1s">Самарқанд марказида, ҳужжатлари тўлиқ замонавий хонадон — қурилиш бошидаги энг паст нархда. Биринчи 100 харидорга <b class="gold">100 млн сўмгача чегирма</b>.</p>
+    <div class="hero__cta reveal" style="transition-delay:.16s">
+      <button class="btn btn-gold" onclick="scrollToForm()">Чегирмали нархни олиш</button>
+      <a class="btn btn-ghost" href="#gallery">Лойиҳани кўриш</a>
+    </div>
+    <div class="hero__chips reveal" style="transition-delay:.24s">
+      <span class="chip">📑 Ҳужжатлар <b>тўлиқ</b></span>
+      <span class="chip">🏗️ <b>16</b> қаватли · <b>12</b> блок</span>
+      <span class="chip">🅿️ Ер ости автотураргоҳ</span>
+    </div>
+  </div>
+  <div class="scrolldown">пастга<i></i></div>
+</header>
+
+<div class="strip"><div class="strip__track">
+  <span>★ Президент ташаббуси билан барпо этилмоқда</span><span>★ Ҳужжатлар 100% тўлиқ</span><span>★ Биринчи 100 хонадонга 100 млн чегирма</span><span>★ Шаҳар марказида замонавий уй</span>
+  <span>★ Президент ташаббуси билан барпо этилмоқда</span><span>★ Ҳужжатлар 100% тўлиқ</span><span>★ Биринчи 100 хонадонга 100 млн чегирма</span><span>★ Шаҳар марказида замонавий уй</span>
+</div></div>
+
+<!-- ===================== I — INTEREST ===================== -->
+<section class="section">
+  <div class="wrap">
+    <span class="snum reveal">01 — НИМА ОЛАСИЗ</span>
+    <h2 class="reveal">Шунчаки хонадон эмас —<br><span class="gold">яхлит маҳалла</span></h2>
+    <p class="lead reveal">Самарқанд вокзали ортидаги ҳудуд Президент ташаббуси билан тубдан янгиланиб, ўрнида замонавий турар-жой мажмуаси барпо этилмоқда. Сиз эса унинг марказидан жой оласиз.</p>
+
+    <div class="stats">
+      <div class="stat reveal"><div class="num">12</div><div class="lbl">турар-жой блоки</div></div>
+      <div class="stat reveal" style="transition-delay:.06s"><div class="num">16</div><div class="lbl">қаватгача</div></div>
+      <div class="stat reveal" style="transition-delay:.12s"><div class="num">4</div><div class="lbl">хонадон тури</div></div>
+      <div class="stat reveal" style="transition-delay:.18s"><div class="num">100</div><div class="lbl">млн сўмгача чегирма</div></div>
+    </div>
+
+    <div class="feat">
+      <div class="feat__item reveal"><div class="feat__ic">🌳</div><div><h3>Яшил, хавфсиз ҳовли</h3><p>Машина кирмайдиган ички боғ, фонтан ва болалар майдончаси — фарзандингиз бемалол ўйнайди.</p></div></div>
+      <div class="feat__item reveal" style="transition-delay:.05s"><div class="feat__ic">🛍️</div><div><h3>Кундалик ҳаёт — бино остида</h3><p>Дўкон, дорихона, хизматлар бир қаватда. Кўп нарса учун уйдан узоққа боришингиз шарт эмас.</p></div></div>
+      <div class="feat__item reveal" style="transition-delay:.1s"><div class="feat__ic">🚗</div><div><h3>Шахсий автотураргоҳ</h3><p>Ер ости тураргоҳда машинангизга доимий жой — қор-ёмғирда жой излаб юрмайсиз.</p></div></div>
+      <div class="feat__item reveal" style="transition-delay:.15s"><div class="feat__ic">🏛️</div><div><h3>Премиум лобби</h3><p>Ёритилган, озода кириш холлари — ҳар куни уйга хотиржам қайтасиз.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY HERE — investment -->
+<section class="section why">
+  <div class="wrap">
+    <span class="snum reveal">02 — НЕГА АЙНАН ҲОЗИР</span>
+    <h2 class="reveal">Бугунги нарх —<br><span class="gold">энг арзон нарх</span></h2>
+    <p class="lead reveal">Қурилиш қанча олдинга кетса, нарх шунча ошади. Ҳозир — лойиҳанинг энг бошланғич, демак энг қулай босқичи. Кейинроқ бу нархни тополмайсиз.</p>
+    <div class="why__grid">
+      <div class="why__card reveal"><div class="k">7.5 млн</div><h3>м² бошланғич нарх</h3><p>Қурилиш босқичидаги нарх — тайёр уйникидан анча паст.</p></div>
+      <div class="why__card reveal" style="transition-delay:.06s"><div class="k">100 млн</div><h3>сўмгача чегирма</h3><p>Фақат биринчи 100 хонадонга амал қилади.</p></div>
+      <div class="why__card reveal" style="transition-delay:.12s"><div class="k">100%</div><h3>Расмий ҳужжатлар</h3><p>Барча рухсат ва ҳужжатлар тўлиқ. Харидингиз хавфсиз.</p></div>
+      <div class="why__card reveal" style="transition-delay:.18s"><div class="k">↑</div><h3>Ўсиб борувчи қиймат</h3><p>Ўзингиз яшайсиз ёки даромад учун сақлайсиз — қиймати ошиб боради.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="section" style="padding-top:0">
+  <div class="wrap">
+    <span class="snum reveal">03 — КЎРИНИШ</span>
+    <h2 class="reveal">Лойиҳа қандай кўринади</h2>
+    <p class="lead reveal">Тасаввур қилинг — мана шу ҳовлида эртанги кунингиз бошланади.</p>
+    <div class="gallery" id="gallery">
+      <figure class="span2 reveal"><img src="assets/facade.jpg" alt="Кечки фасад"><figcaption>Кечки фасад</figcaption></figure>
+      <figure class="reveal"><img src="assets/courtyard.jpg" alt="Ички ҳовли"><figcaption>Ички ҳовли</figcaption></figure>
+      <figure class="reveal"><img src="assets/amenities.jpg" alt="Терраса ва лобби"><figcaption>Терраса · лобби</figcaption></figure>
+      <figure class="reveal"><img src="assets/exterior2.jpg" alt="Мажмуа"><figcaption>Мажмуа</figcaption></figure>
+      <figure class="reveal"><img src="assets/courtyard2.jpg" alt="Ободонлаштириш"><figcaption>Ободонлаштириш</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== D — DESIRE ===================== -->
+<section class="section" id="offer" style="padding-top:0">
+  <div class="wrap">
+    <span class="snum reveal">04 — ТАКЛИФ</span>
+    <h2 class="reveal">Биринчи 100 харидорга <span class="gold">махсус таклиф</span></h2>
+    <p class="lead reveal">Ҳозир ариза қолдирсангиз: бозордан паст нарх, 100 млн сўмгача чегирма ва ўзингизга мос тўлов режаси. Жойлар чекланган — тугаши билан таклиф ёпилади.</p>
+
+    <!-- OFFER -->
+    <div class="offer reveal">
+      <span class="tag">Чекланган таклиф</span>
+      <h2>Биринчи <span class="gold">100 хонадон</span></h2>
+      <p>Шу 100 тадан бирини банд қилсангиз — <b style="color:var(--ivory)">100 млн сўмгача</b> тежайсиз ва нархни ҳозирги даражада қотирасиз.</p>
+      <div class="countdown" id="cd">
+        <div class="cd"><b data-d>00</b><span>кун</span></div>
+        <div class="cd"><b data-h>00</b><span>соат</span></div>
+        <div class="cd"><b data-m>00</b><span>дақиқа</span></div>
+        <div class="cd"><b data-s>00</b><span>сония</span></div>
+      </div>
+      <div class="progress"><div class="bar"><i></i></div><div class="lbl"><span>Банд қилинган</span><span><b>63</b> / 100 хонадон</span></div></div>
+      <button class="btn btn-gold btn-block" style="margin-top:24px" onclick="scrollToForm()">Ўз хонадонимни банд қиламан →</button>
+    </div>
+  </div>
+</section>
+
+<!-- STEPS -->
+<section class="section" style="padding-top:0">
+  <div class="wrap">
+    <span class="snum reveal">05 — ҚАНДАЙ</span>
+    <h2 class="reveal">Уч қадамда — <span class="gold">ўз уйингизга</span></h2>
+    <div class="steps">
+      <div class="step reveal"><div><h3>Ариза қолдиринг</h3><p>Исм ва телефонни ёзинг — 1 дақиқа етади.</p></div></div>
+      <div class="step reveal" style="transition-delay:.06s"><div><h3>Менежер қўнғироқ қилади</h3><p>Бўш хонадонлар, нарх ва тўлов режасини тушунтиради. Хоҳласангиз, кўрикка ёзиламиз.</p></div></div>
+      <div class="step reveal" style="transition-delay:.12s"><div><h3>Хонадонни банд қиласиз</h3><p>Чегирмани қотирасиз ва шартномани расмийлаштирасиз.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section" style="padding-top:0">
+  <div class="wrap">
+    <span class="snum reveal">06 — САВОЛ-ЖАВОБ</span>
+    <h2 class="reveal">Кўнгилда қолиши мумкин бўлган саволлар</h2>
+    <div class="faq">
+      <div class="qa reveal"><button class="qa__q">Лойиҳа ишончлими, ҳужжатлар жойидами?<span>+</span></button><div class="qa__a"><p>Ҳа. Қурилиш расман олиб борилмоқда, барча ҳужжат ва рухсатлар тўлиқ. Учрашувда уларни ўз кўзингиз билан кўрасиз.</p></div></div>
+      <div class="qa reveal"><button class="qa__q">Тўловни қандай қилса бўлади?<span>+</span></button><div class="qa__a"><p>Бир йўла ёки бўлиб-бўлиб — бир нечта режа бор. Сизга мос келадиганини менежер танлашга ёрдам беради.</p></div></div>
+      <div class="qa reveal"><button class="qa__q">Чегирма ростдан 100 млн сўмгача борми?<span>+</span></button><div class="qa__a"><p>Ҳа, лекин фақат биринчи 100 хонадонга. Жойлар тугаши билан таклиф ёпилади.</p></div></div>
+      <div class="qa reveal"><button class="qa__q">Қаерда жойлашган?<span>+</span></button><div class="qa__a"><p>Самарқанд, вокзал орти — янги шаҳарча маркази. Аниқ манзилни менежер боғланганда юборади.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== A — ACTION ===================== -->
+<section class="section lead-sec" id="lead">
+  <div class="wrap">
+    <div class="form-card reveal">
+      <div class="form-body" id="formBody">
+        <span class="eyebrow" style="display:flex;justify-content:center">Ариза қолдиринг</span>
+        <h2>Чегирмали нархни<br>биринчилардан билинг</h2>
+        <p class="lead">Исм ва телефонни қолдиринг — менежеримиз қўнғироқ қилиб, бўш хонадонлар ва нархни айтади. Ҳеч қандай мажбурият йўқ.</p>
+        <form id="leadForm" novalidate>
+          <div class="field"><label for="name">Исмингиз</label><input type="text" id="name" name="name" placeholder="Масалан: Жасур" autocomplete="given-name" required></div>
+          <div class="field"><label for="phone">Телефон рақам</label><input type="tel" id="phone" name="phone" placeholder="+998 90 123 45 67" inputmode="tel" autocomplete="tel" required></div>
+          <button type="submit" class="btn btn-gold btn-block" id="submitBtn">Чегирмали нархни олиш</button>
+          <div class="form-msg" id="formMsg"></div>
+          <p class="consent">Маълумотларингиз фақат шу лойиҳа бўйича боғланиш учун ишлатилади. Спам йўқ.</p>
+        </form>
+        <div class="trust-row">
+          <span>🔒 Маълумот хавфсиз</span><span>⏱ 24 соат ичида қўнғироқ</span><span>🎁 Чегирма кафолати</span>
+        </div>
+      </div>
+      <div class="success" id="success">
+        <div class="ico">✓</div>
+        <h3>Аризангиз қабул қилинди!</h3>
+        <p>Менежеримиз 24 соат ичида сиз билан боғланиб, бўш хонадонлар ва нархни айтади. Телефонингизга эътибор беринг 🏡</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="brand" style="justify-content:center"><span class="mark">PR</span><span>Poytaxt Residence</span></div>
+    <p style="margin-top:16px">Самарқанд ш., вокзал орти ҳудуди · “POYTAXT NURI 1” МЧЖ<br>© 2026 Poytaxt Residence. Барча ҳуқуқлар ҳимояланган.</p>
+  </div>
+</footer>
+
+<div class="sticky" id="sticky">
+  <button class="btn btn-gold btn-block" onclick="scrollToForm()">Ариза қолдириш — чегирмани илинг</button>
+</div>
+
+<!-- lightbox -->
+<div class="lb" id="lb"><span class="lb__x" id="lbx">✕</span><img id="lbimg" src="" alt=""></div>
+
+<script>
+/* ===== CONFIG ===== */
+const CONFIG = {
+  APPS_SCRIPT_URL: "PASTE_APPS_SCRIPT_URL_HERE",  // 2-босқич деплойдан кейин қўйилади
+  DEADLINE: "2026-07-15T23:59:59"
+};
+
+/* ===== Telegram Mini App ===== */
+const tg = window.Telegram ? window.Telegram.WebApp : null;
+let TG_USER = {};
+if (tg){
+  tg.ready(); tg.expand();
+  try{ tg.setHeaderColor("#0C111C"); tg.setBackgroundColor("#0C111C"); }catch(e){}
+  const u = tg.initDataUnsafe && tg.initDataUnsafe.user;
+  if (u){
+    TG_USER = {id:u.id, username:u.username||"", name:[u.first_name,u.last_name].filter(Boolean).join(" ")};
+    const n=document.getElementById("name"); if(TG_USER.name && !n.value) n.value=TG_USER.name;
+  }
+}
+
+/* ===== Phone mask ===== */
+const phone=document.getElementById("phone");
+phone.addEventListener("input",function(){
+  let d=this.value.replace(/\D/g,""); if(d.startsWith("998"))d=d.slice(3); d=d.slice(0,9);
+  let o="+998"; if(d.length>0)o+=" "+d.slice(0,2); if(d.length>2)o+=" "+d.slice(2,5);
+  if(d.length>5)o+=" "+d.slice(5,7); if(d.length>7)o+=" "+d.slice(7,9); this.value=o;
+});
+phone.addEventListener("focus",function(){if(!this.value)this.value="+998 ";});
+
+/* ===== Submit → Google Sheets ===== */
+const form=document.getElementById("leadForm"),msg=document.getElementById("formMsg"),btn=document.getElementById("submitBtn");
+form.addEventListener("submit",async function(e){
+  e.preventDefault(); msg.textContent=""; msg.className="form-msg";
+  const name=document.getElementById("name"); const digits=phone.value.replace(/\D/g,"");
+  let ok=true;
+  if(name.value.trim().length<2){name.classList.add("err");ok=false;}else name.classList.remove("err");
+  if(digits.length!==12){phone.classList.add("err");ok=false;}else phone.classList.remove("err");
+  if(!ok){msg.textContent="Илтимос, исм ва тўлиқ телефон рақамни киритинг.";msg.classList.add("bad");return;}
+  btn.disabled=true; btn.textContent="Юборилмоқда...";
+  const payload={name:name.value.trim(),phone:"+"+digits,source:tg?"Telegram Mini App":"Веб-сайт",tg_id:TG_USER.id||"",tg_username:TG_USER.username||"",page:location.href};
+  try{
+    if(!CONFIG.APPS_SCRIPT_URL||CONFIG.APPS_SCRIPT_URL.includes("PASTE_")){
+      console.log("DEMO payload:",payload); await new Promise(r=>setTimeout(r,700));
+    }else{
+      await fetch(CONFIG.APPS_SCRIPT_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)});
+    }
+    document.getElementById("formBody").classList.add("hide");
+    document.getElementById("success").classList.add("show");
+    if(tg){try{tg.HapticFeedback.notificationOccurred("success");}catch(e){}}
+    document.getElementById("sticky").classList.add("hide");
+  }catch(err){
+    msg.textContent="Хатолик юз берди. Илтимос, қайта уриниб кўринг."; msg.classList.add("bad");
+    btn.disabled=false; btn.textContent="Аризани юбориш";
+  }
+});
+
+/* ===== Countdown ===== */
+(function(){
+  const end=new Date(CONFIG.DEADLINE).getTime();
+  const el={d:document.querySelector("[data-d]"),h:document.querySelector("[data-h]"),m:document.querySelector("[data-m]"),s:document.querySelector("[data-s]")};
+  const pad=n=>String(n).padStart(2,"0");
+  function tick(){let t=end-Date.now();if(t<0)t=0;el.d.textContent=pad(Math.floor(t/864e5));el.h.textContent=pad(Math.floor(t%864e5/36e5));el.m.textContent=pad(Math.floor(t%36e5/6e4));el.s.textContent=pad(Math.floor(t%6e4/1e3));}
+  tick(); setInterval(tick,1000);
+})();
+
+/* ===== UI: nav, reveal, sticky, faq, lightbox ===== */
+function scrollToForm(){document.getElementById("lead").scrollIntoView({behavior:"smooth"});setTimeout(()=>document.getElementById("name").focus({preventScroll:true}),600);}
+
+const nav=document.getElementById("nav");
+addEventListener("scroll",()=>nav.classList.toggle("scrolled",scrollY>40));
+
+const io=new IntersectionObserver(es=>es.forEach(en=>{if(en.isIntersecting){en.target.classList.add("in");io.unobserve(en.target);}}),{threshold:.12});
+document.querySelectorAll(".reveal").forEach(el=>io.observe(el));
+
+new IntersectionObserver(es=>es.forEach(en=>document.getElementById("sticky").classList.toggle("hide",en.isIntersecting)),{threshold:.25}).observe(document.getElementById("lead"));
+
+document.querySelectorAll(".qa__q").forEach(q=>q.addEventListener("click",()=>q.parentElement.classList.toggle("open")));
+
+/* ===== Top bar rotating phrases ===== */
+(function(){
+  const items=[...document.querySelectorAll("#topRot .topbar__item")];
+  if(items.length<2)return;
+  let i=0;
+  setInterval(()=>{
+    items[i].classList.remove("is-active");
+    i=(i+1)%items.length;
+    items[i].classList.add("is-active");
+  },3200);
+})();
+
+const lb=document.getElementById("lb"),lbimg=document.getElementById("lbimg");
+document.querySelectorAll("#gallery img").forEach(im=>im.addEventListener("click",()=>{lbimg.src=im.src;lb.classList.add("show");}));
+document.getElementById("lbx").addEventListener("click",()=>lb.classList.remove("show"));
+lb.addEventListener("click",e=>{if(e.target===lb)lb.classList.remove("show");});
+</script>
+</body>
+</html>
