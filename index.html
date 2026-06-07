@@ -246,6 +246,7 @@ footer a{color:var(--ivory);font-weight:600}
   .hero{padding-bottom:72px}
 }
 @media(min-width:980px){.why__grid{grid-template-columns:repeat(4,1fr)}}
+@media(max-width:760px){.hero{align-items:center;padding-top:108px;padding-bottom:64px}}
 </style>
 </head>
 <body>
@@ -253,8 +254,8 @@ footer a{color:var(--ivory);font-weight:600}
 <!-- TOP BAR — continuous marquee of attention phrases -->
 <div class="topbar" id="topbar" aria-hidden="true">
   <div class="topbar__track">
-    <span>★ Ижарага пул тўлагандан кўра — ўз уйингизга эга бўлинг</span><span>★ Самарқанд марказида замонавий хонадон — м² 7,5 млн сўмдан</span><span>★ Биринчи 100 харидорга 100 млн сўмгача чегирма</span><span>★ Фоизсиз 60 ойгача бўлиб тўлаш</span><span>★ Ҳужжатлар тўлиқ — хавфсиз, кафолатли харид</span>
-    <span>★ Ижарага пул тўлагандан кўра — ўз уйингизга эга бўлинг</span><span>★ Самарқанд марказида замонавий хонадон — м² 7,5 млн сўмдан</span><span>★ Биринчи 100 харидорга 100 млн сўмгача чегирма</span><span>★ Фоизсиз 60 ойгача бўлиб тўлаш</span><span>★ Ҳужжатлар тўлиқ — хавфсиз, кафолатли харид</span>
+    <span>★ Акция нархида 75 та хонадон қолди</span><span>★ Президентимиз қарори билан янгиланаётган 301 га массивда қурилмоқда</span><span>★ Акция нархида 75 та хонадон қолди</span><span>★ Президентимиз қарори билан янгиланаётган 301 га массивда қурилмоқда</span>
+    <span>★ Акция нархида 75 та хонадон қолди</span><span>★ Президентимиз қарори билан янгиланаётган 301 га массивда қурилмоқда</span><span>★ Акция нархида 75 та хонадон қолди</span><span>★ Президентимиз қарори билан янгиланаётган 301 га массивда қурилмоқда</span>
   </div>
 </div>
 
@@ -286,11 +287,6 @@ footer a{color:var(--ivory);font-weight:600}
   </div>
   <div class="scrolldown">пастга<i></i></div>
 </header>
-
-<div class="strip"><div class="strip__track">
-  <span>★ Президент ташаббуси билан барпо этилмоқда</span><span>★ Ҳужжатлар 100% тўлиқ</span><span>★ Биринчи 100 хонадонга 100 млн чегирма</span><span>★ Шаҳар марказида замонавий уй</span>
-  <span>★ Президент ташаббуси билан барпо этилмоқда</span><span>★ Ҳужжатлар 100% тўлиқ</span><span>★ Биринчи 100 хонадонга 100 млн чегирма</span><span>★ Шаҳар марказида замонавий уй</span>
-</div></div>
 
 <!-- ===================== I — INTEREST ===================== -->
 <section class="section">
@@ -369,21 +365,18 @@ footer a{color:var(--ivory);font-weight:600}
       <div class="form-body" id="formBody">
         <span class="eyebrow" style="display:flex;justify-content:center">Ариза қолдиринг</span>
         <h2>Чегирмали нархни<br>биринчилардан билинг</h2>
-        <p class="lead">Исм ва телефонни қолдиринг — менежеримиз қўнғироқ қилиб, бўш хонадонлар, нарх ва чегирмани айтади.</p>
         <form id="leadForm" novalidate>
           <div class="field"><label for="name">Исмингиз</label><input type="text" id="name" name="name" placeholder="Масалан: Жасур" autocomplete="given-name" required></div>
           <div class="field"><label for="phone">Телефон рақам</label><input type="tel" id="phone" name="phone" placeholder="+998 90 123 45 67" inputmode="tel" autocomplete="tel" required></div>
           <button type="submit" class="btn btn-gold btn-block" id="submitBtn">Ҳа, чегирмани истайман →</button>
           <div class="form-msg" id="formMsg"></div>
         </form>
-        <div class="trust-row">
-          <span>🔒 Маълумот хавфсиз</span><span>⏱ 24 соат ичида қўнғироқ</span><span>🎁 Чегирма кафолати</span>
-        </div>
       </div>
       <div class="success" id="success">
         <div class="ico">✓</div>
-        <h3>Аризангиз қабул қилинди!</h3>
-        <p>Менежеримиз 24 соат ичида сиз билан боғланиб, бўш хонадонлар ва нархни айтади. Телефонингизга эътибор беринг 🏡</p>
+        <h3>Қизиқиш билдирганингиз учун раҳмат!</h3>
+        <p>Тез орада сиз билан боғланамиз.</p>
+        <a class="btn btn-ghost btn-block" style="margin-top:20px" href="https://t.me/poytaxt_residence" target="_blank" rel="noopener">Telegram каналимиз</a>
       </div>
     </div>
   </div>
@@ -397,7 +390,7 @@ footer a{color:var(--ivory);font-weight:600}
 </footer>
 
 <div class="sticky" id="sticky">
-  <button class="btn btn-gold btn-block" onclick="scrollToForm()">Ариза қолдириш — чегирмани илинг</button>
+  <button class="btn btn-gold btn-block" onclick="scrollToForm()">Акциядан фойдаланиш</button>
 </div>
 
 <!-- lightbox -->
