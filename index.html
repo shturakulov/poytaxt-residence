@@ -12,6 +12,10 @@
 <!-- Telegram Mini App SDK -->
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
+<!-- Telegram Ads — Pixel Tag Code -->
+<script>(function(t,l,g,r,m){t[g]||(g=t[g]=function(){g.run?g.run.apply(g,arguments):g.queue.push(arguments)},g.queue=[],t=l.createElement(r),t.async=!0,t.src=m,l=l.getElementsByTagName(r)[0],l.parentNode.insertBefore(t,l))})(window,document,'tgp','script','https://telegram.org/js/pixel.js');tgp('init','vdowZRja');</script>
+<!-- End Pixel Tag Code -->
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,400;0,500;0,600;0,700;1,500;1,600&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -443,6 +447,7 @@ form.addEventListener("submit",async function(e){
     }
     document.getElementById("formBody").classList.add("hide");
     document.getElementById("success").classList.add("show");
+    try{ if(window.tgp) tgp('event','vdowZRja-cThTB0QX'); }catch(e){}  // Telegram Ads — Lead event
     if(tg){try{tg.HapticFeedback.notificationOccurred("success");}catch(e){}}
     document.getElementById("sticky").classList.add("hide");
   }catch(err){
