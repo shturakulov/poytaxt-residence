@@ -45,8 +45,8 @@ leveri (formaga scroll qilish oqimi odatda 30–50% yo'qotadi).
 ```
 poytaxt-residence/
 ├── index.html          # Butun sayt (HTML+CSS+JS bitta faylda)
-├── assets/             # Renderlar. Faqat hero.jpg darhol yuklanadi,
-│                       #   qolgan 5 tasi galereya modalida lazy.
+├── assets/             # Renderlar. Faqat hero.jpg ishlatiladi (fon).
+│                       #   Qolgan 5 tasi hozir ishlatilmaydi — pastga qara.
 ├── api/bot.js          # Telegram bot webhook (Vercel serverless)
 ├── apps-script/Code.gs # Google Apps Script — formani Sheets'ga yozadi
 ├── netlify.toml        # (eski; hozir Vercel'da turibdi)
@@ -56,8 +56,13 @@ poytaxt-residence/
 ## index.html tuzilmasi
 Bir ekranli tartib (yuqoridan pastga):
 **aylanma lenta (`.ticker`)** → oltin badge → H1 → subheadline → tanqislik bari →
-**forma kartasi** → «Лойиҳани кўриш» havolasi → pastki mayda qator.
-Galereya alohida modal oynada.
+**forma kartasi** → pastki mayda qator.
+
+> **Galereya modali olib tashlangan** (2026-08-12). «Лойиҳани кўриш» tugmasi kerak
+> emas edi, u esa modalni ochadigan yagona joy edi — shuning uchun modal HTML/CSS va
+> ~35 qator JS ham o'chirildi. `assets/` dagi 5 ta galereya rasmi joyida qoldi, lekin
+> **sahifada ishlatilmaydi**: faqat `hero.jpg` fon sifatida yuklanadi.
+> Galereya qaytadan kerak bo'lsa, git tarixidan olish mumkin (`00c6c21` dan oldingi).
 
 > Sahifada **logotip/brend qatori yo'q** — ataylab olib tashlangan. Brend nomi faqat
 > brauzer tab sarlavhasida va pastki mayda qatorda («POYTAXT NURI 1» MCHJ) qoladi.
