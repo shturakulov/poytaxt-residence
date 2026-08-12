@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Poytaxt Residence — Самарқандда таъмири тайёр хонадон</title>
-<meta name="description" content="Самарқанд, вокзал орти — Президент ташаббуси билан барпо этилаётган янги шаҳарчада таъмири тайёр хонадонлар. 60 ойгача фоизсиз бўлиб тўлаш. Таъмирли 100 та хонадонга чегирма.">
-<meta property="og:title" content="Poytaxt Residence — таъмири тайёр хонадон">
-<meta property="og:description" content="Тайёр хонадон оласиз — таъмирга бир сўм ҳам сарфламайсиз. 60 ойгача фоизсиз бўлиб тўлаш.">
+<title>Poytaxt Residence — Самарқанднинг янги марказидан хонадон</title>
+<meta name="description" content="Давлатимиз раҳбари ташаббуси билан янгиланаётган Вокзал орти массивида қурилмоқда. Хонадон таъмирланган ҳолда топширилади — таъмирга бир сўм сарфламайсиз. 60 ойгача фоизсиз бўлиб тўлаш.">
+<meta property="og:title" content="Poytaxt Residence — Самарқанднинг янги марказидан хонадон">
+<meta property="og:description" content="Таъмирга бир сўм ҳам сарфламайсиз. Ҳозирги нархда кейинчалик топа олмайсиз.">
 <meta property="og:type" content="website">
 
 <link rel="preload" as="image" href="assets/hero.jpg" fetchpriority="high">
@@ -44,7 +44,7 @@ body{
   background:var(--bg);color:var(--ivory);
   font-family:'Manrope',system-ui,sans-serif;line-height:1.55;
   font-size:16px;-webkit-font-smoothing:antialiased;letter-spacing:.1px;
-  overflow-x:hidden;
+  overflow-x:hidden;min-height:100dvh;display:flex;flex-direction:column;
 }
 img{max-width:100%;display:block}
 a{color:inherit;text-decoration:none}
@@ -61,8 +61,18 @@ h1{font-family:'Cormorant',Georgia,serif;font-weight:700;line-height:1.08;letter
   rgba(10,14,24,.93) 48%,rgba(10,14,24,.97) 70%,var(--bg) 90%)}
 @media(prefers-reduced-motion:reduce){.bg img{animation:none}}
 
+/* ---------- тепадаги айланма лента ---------- */
+.ticker{position:relative;z-index:3;flex:none;overflow:hidden;white-space:nowrap;
+  background:linear-gradient(90deg,var(--gold-2),var(--gold),var(--gold-2));color:#2e2206;
+  padding:9px 0;font-weight:800;font-size:12.5px;letter-spacing:.3px}
+.ticker__track{display:inline-block;animation:marquee 30s linear infinite}
+.ticker__track span{margin:0 18px}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@media(prefers-reduced-motion:reduce){.ticker__track{animation:none}}
+@media(max-width:520px){.ticker{font-size:11.5px;padding:8px 0}.ticker__track span{margin:0 13px}}
+
 /* ---------- каркас ---------- */
-.shell{position:relative;z-index:2;min-height:100dvh;max-width:1180px;margin:0 auto;
+.shell{position:relative;z-index:2;flex:1;max-width:1180px;width:100%;margin:0 auto;
   display:flex;flex-direction:column;
   padding:16px 18px calc(16px + env(safe-area-inset-bottom))}
 .topline{display:flex;align-items:center;flex:none}
@@ -76,16 +86,12 @@ h1{font-family:'Cormorant',Georgia,serif;font-weight:700;line-height:1.08;letter
 /* ---------- чап устун ---------- */
 .badge{display:inline-flex;align-self:flex-start;background:linear-gradient(135deg,var(--gold),var(--gold-2));
   color:#2e2206;font-weight:800;font-size:11.5px;letter-spacing:.6px;padding:6px 13px;border-radius:999px}
-h1{font-size:clamp(25px,6.6vw,46px);margin-top:11px;
+h1{font-size:clamp(25px,6.5vw,46px);margin-top:9px;line-height:1.05;
   text-shadow:0 1px 2px rgba(8,11,18,.7),0 2px 22px rgba(8,11,18,.9)}
 h1 em{font-style:italic;color:var(--gold)}
-.sub{margin-top:11px;font-size:clamp(14px,3.7vw,17px);color:#EEF2F8;max-width:46ch;
+.sub{margin-top:9px;font-size:clamp(13.5px,3.6vw,17px);line-height:1.42;color:#EEF2F8;max-width:46ch;
   font-weight:500;text-shadow:0 1px 2px rgba(8,11,18,.75),0 1px 14px rgba(8,11,18,.85)}
-.chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:13px}
-.chips span{font-size:12px;font-weight:600;padding:6px 12px;border-radius:999px;color:#F2F5FA;
-  background:rgba(12,17,28,.55);border:1px solid var(--line);backdrop-filter:blur(8px)}
-
-.scarce{margin-top:15px;max-width:400px}
+.scarce{margin-top:12px;max-width:400px}
 .scarce .bar{height:4px;border-radius:999px;background:rgba(245,240,231,.14);overflow:hidden}
 .scarce .bar i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--gold-2),var(--gold))}
 .scarce .lbl{font-size:12px;color:#C6CFDF;margin-top:7px;text-shadow:0 1px 10px rgba(8,11,18,.8)}
@@ -93,7 +99,7 @@ h1 em{font-style:italic;color:var(--gold)}
 
 /* ---------- форма ---------- */
 .card{background:rgba(23,32,51,.9);backdrop-filter:blur(14px);border:1px solid var(--gold);
-  border-radius:20px;padding:18px 16px;box-shadow:0 30px 70px -40px rgba(220,184,103,.5)}
+  border-radius:20px;padding:16px;box-shadow:0 30px 70px -40px rgba(220,184,103,.5)}
 .card h2{font-family:'Cormorant',Georgia,serif;font-size:22px;font-weight:700;line-height:1.15;letter-spacing:.2px}
 .field{margin-top:10px}
 .field label{display:block;font-size:12.5px;font-weight:600;margin-bottom:5px;color:#D8DFEC}
@@ -159,7 +165,6 @@ h1 em{font-style:italic;color:var(--gold)}
 
 /* ---------- паст экранлар (мобил тартиб): заҳира сиқиш ---------- */
 @media(max-height:700px) and (max-width:859px){
-  .chips{display:none}
   .legal{display:none}
   h1{font-size:clamp(23px,5.9vw,30px)}
   .shell{padding:12px 16px calc(12px + env(safe-area-inset-bottom))}
@@ -192,10 +197,31 @@ h1 em{font-style:italic;color:var(--gold)}
   .panel__body{grid-template-columns:1fr 1fr}
 }
 
+/* энг тор экранлар (360x640 ва ундан паст). Матн қисқартирилмайди — фақат
+   зичлик оширилади. Форма сарлавҳаси яширилади, чунки тугма матни
+   ("Чегирмани банд қилиш") айни шу маънони беради. */
+@media(max-height:660px) and (max-width:859px){
+  .card h2{display:none}
+  .ticker{padding:5px 0;font-size:10.5px}
+  .shell{padding:9px 14px calc(9px + env(safe-area-inset-bottom))}
+  .content{gap:9px;padding:6px 0 2px}
+  .badge{font-size:10.5px;padding:4px 11px}
+  h1{font-size:20px}
+  .sub{font-size:12px;line-height:1.35;margin-top:7px}
+  .scarce{margin-top:7px}
+  .card{padding:12px 13px}
+  .field{margin-top:5px}
+  .field input{padding:10px 12px}
+  .btn{padding:11px 20px}
+  .btn-block{margin-top:8px}
+  .trust{margin-top:5px;font-size:10.5px}
+  .links{margin-top:7px}
+}
+
 /* ---------- паст ойна (десктоп тартиб): заҳира сиқиш ---------- */
 @media(max-height:620px) and (min-width:860px){
-  .chips{display:none}
   .legal{display:none}
+  .ticker{padding:6px 0}
   .shell{padding:14px 34px}
   .content{padding:10px 0}
   .card{padding:16px 18px}
@@ -208,6 +234,13 @@ h1 em{font-style:italic;color:var(--gold)}
 
 <div class="bg"><img src="assets/hero.jpg" alt="Poytaxt Residence турар-жой мажмуаси" fetchpriority="high"></div>
 
+<!-- тепадаги айланма лента: қулайликлар. Узлуксиз айланиши учун рўйхат икки марта такрорланади -->
+<div class="ticker" aria-label="Мажмуа қулайликлари">
+  <div class="ticker__track">
+    <span>• 60 ойгача фоизсиз бўлиб тўлаш</span><span>• Мактаб ва боғча яқин</span><span>• Машина кирмайдиган ҳовли</span><span>• Ер ости автотураргоҳ</span><span>• Ҳужжатлар тўлиқ</span><span>• Дўкон ва дорихона бино остида</span><span>• 60 ойгача фоизсиз бўлиб тўлаш</span><span>• Мактаб ва боғча яқин</span><span>• Машина кирмайдиган ҳовли</span><span>• Ер ости автотураргоҳ</span><span>• Ҳужжатлар тўлиқ</span><span>• Дўкон ва дорихона бино остида</span>
+  </div>
+</div>
+
 <main class="shell">
 
   <div class="topline">
@@ -218,15 +251,9 @@ h1 em{font-style:italic;color:var(--gold)}
 
     <div class="col">
       <span class="badge in">Таъмирли 100 та хонадонга чегирма</span>
-      <h1 class="in" style="animation-delay:.06s">Тайёр хонадон оласиз —<br><em>таъмирга бир сўм ҳам сарфламайсиз</em></h1>
-      <p class="sub in" style="animation-delay:.12s">Самарқанд, вокзал орти — Президент ташаббуси билан барпо этилаётган янги шаҳарчада.</p>
-      <div class="chips in" style="animation-delay:.18s">
-        <span>60 ой фоизсиз</span>
-        <span>Мактаб ва боғча яқин</span>
-        <span>Машинасиз ҳовли</span>
-        <span>Ер ости тураргоҳ</span>
-      </div>
-      <div class="scarce in" style="animation-delay:.24s">
+      <h1 class="in" style="animation-delay:.06s">Самарқанднинг янги марказидан хонадон —<br><em>таъмирга бир сўм ҳам сарфламайсиз</em></h1>
+      <p class="sub in" style="animation-delay:.12s">Давлатимиз раҳбари ташаббуси билан янгиланаётган Вокзал орти массивида қурилмоқда. Ҳозирги нархда кейинчалик топа олмайсиз.</p>
+      <div class="scarce in" style="animation-delay:.18s">
         <div class="bar"><i id="bar" style="width:0"></i></div>
         <div class="lbl">100 та таъмирли хонадондан <b id="left">—</b> таси қолди — улгуринг</div>
       </div>

@@ -18,15 +18,19 @@ leveri (formaga scroll qilish oqimi odatda 30–50% yo'qotadi).
 1. **m² narxi hech qayerda yozilmaydi.** Narx o'zgaruvchan — aniq summani menejer aytadi.
    Eski `7,5 млн` matnlari 2026-08-11 da butunlay olib tashlangan.
 2. **Chegirma miqdori ham yozilmaydi.** Faqat «Таъмирли 100 та хонадонга чегирма».
-3. Joriy asosiy taklif: **ta'mirli (taʼmiri tayyor) holatda topshiriladigan 100 ta
-   xonadonga chegirma**. Bosh sarlavhaning kuchi shunda —
-   «таъмирга бир сўм ҳам сарфламайсиз».
-4. Amaldagi shartlar: **60 oygacha foizsiz bo'lib to'lash**, hujjatlar to'liq,
-   maktab va bog'cha yaqin, mashinasiz hovli, yer osti turargoh.
-5. **Telefon raqami saytda ataylab yo'q.** Qo'ng'iroqlar Google Sheets'ga ham,
+3. **«Тайёр» so'zi ishlatilmaydi.** Uylar 2–3 yildan keyin topshiriladi, hozir qurilish
+   davom etmoqda. «Tayyor xonadon» degan gap mijozni chalg'itadi va menejer qo'ng'iroq
+   qilganda ishonch yo'qoladi. To'g'ri ibora: **«таъмирланган ҳолда топширилади»**.
+   Qurilish bosqichi kamchilik emas — aynan shu narxni qulay qiladi, matn shuni aytsin.
+4. Joriy asosiy taklif: **ta'mirli holatda topshiriladigan 100 ta xonadonga chegirma**.
+   Bosh sarlavhaning kuchi shunda — «таъмирга бир сўм ҳам сарфламайсиз».
+5. Amaldagi shartlar: **60 oygacha foizsiz bo'lib to'lash**, hujjatlar to'liq,
+   maktab va bog'cha yaqin, mashinasiz hovli, yer osti turargoh, do'kon/dorixona
+   bino ostida. Bular tepadagi aylanma lentada (`.ticker`) ko'rsatiladi.
+6. **Telefon raqami saytda ataylab yo'q.** Qo'ng'iroqlar Google Sheets'ga ham,
    Telegram Ads pikseliga ham tushmaydi — ya'ni kuzatib bo'lmaydi. Barcha lead
    formadan o'tsin, statistika toza bo'lsin. Raqam qo'shish so'ralsa — buni eslat.
-6. Yangi bo'lim qo'shish taklif qilinsa — **avval sahifa bir ekranga sig'ishini tekshir**.
+7. Yangi bo'lim qo'shish taklif qilinsa — **avval sahifa bir ekranga sig'ishini tekshir**.
    Sig'masa qo'shilmaydi yoki modal oynaga chiqariladi.
 
 ## Til va uslub
@@ -51,8 +55,14 @@ poytaxt-residence/
 
 ## index.html tuzilmasi
 Bir ekranli tartib (yuqoridan pastga):
-brend → oltin badge → H1 → subheadline → chip'lar → tanqislik bari → **forma kartasi** →
-ikkilamchi havolalar → pastki mayda qator. Galereya alohida modal oynada.
+**aylanma lenta (`.ticker`)** → brend → oltin badge → H1 → subheadline → tanqislik bari →
+**forma kartasi** → «Лойиҳани кўриш» havolasi → pastki mayda qator.
+Galereya alohida modal oynada.
+
+`.ticker` — sahifaning eng tepasidagi oltin lenta, qulayliklar uzluksiz suriladi.
+Ro'yxat **ikki marta takrorlangan**, chunki animatsiya `translateX(-50%)` bilan ishlaydi —
+element qo'shsang yoki o'chirsang, ikkala nusxada ham bir xil qil, aks holda aylanishda
+sakrash paydo bo'ladi.
 
 ### CONFIG (skript boshida)
 - `APPS_SCRIPT_URL` — Google Apps Script web-app URL. Bo'sh yoki `PASTE_` bo'lsa forma
@@ -65,8 +75,14 @@ ikkilamchi havolalar → pastki mayda qator. Galereya alohida modal oynada.
 - **`min-height:100dvh` (`svh` emas).** Mobil klaviatura ochilganda viewport qisqaradi;
   `dvh` u bilan birga qisqaradi, sahifa scroll qilinadigan bo'ladi va tugma klaviatura
   ortida qolib ketmaydi. Bu bir ekranli formalarning klassik bug'i — tekshirilgan.
-- `@media(max-height:700px)` — past ekranlar uchun zaxira siqish (chip'lar va pastki
-  qator yashiriladi, paddinglar kichrayadi). 360×640 gacha sig'adi.
+- **Uch bosqichli siqish.** Media query'lar kenglik bo'yicha ham ajratilgan, aks holda
+  desktop qoidalari past ekran qoidalarini bekor qilib overflow beradi:
+  `max-height:700px + max-width:859px` (mobil), `max-height:660px + max-width:859px`
+  (eng tor — forma sarlavhasi yashiriladi), `max-height:620px + min-width:860px` (past
+  desktop oyna). Matn hech qachon qisqartirilmaydi — faqat zichlik oshiriladi.
+- Matn o'zgartirilsa **balandlik qayta tekshirilishi shart**. Tekshirish usuli:
+  `document.documentElement.scrollHeight - innerHeight` = 0 bo'lishi kerak.
+  O'lchamlar: 360×640, 375×667, 390×844, 768×1024, 900×540, 1280×720, 1440×900.
 - **Telegram aniqlash:** `telegram-web-app.js` oddiy brauzerda ham
   `window.Telegram.WebApp` yaratadi. Shuning uchun haqiqiy Mini App faqat bo'sh
   bo'lmagan `initData` bilan aniqlanadi — aks holda barcha lidlar Sheets'ga
