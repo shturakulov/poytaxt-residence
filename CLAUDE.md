@@ -55,9 +55,13 @@ poytaxt-residence/
 
 ## index.html tuzilmasi
 Bir ekranli tartib (yuqoridan pastga):
-**aylanma lenta (`.ticker`)** → brend → oltin badge → H1 → subheadline → tanqislik bari →
+**aylanma lenta (`.ticker`)** → oltin badge → H1 → subheadline → tanqislik bari →
 **forma kartasi** → «Лойиҳани кўриш» havolasi → pastki mayda qator.
 Galereya alohida modal oynada.
+
+> Sahifada **logotip/brend qatori yo'q** — ataylab olib tashlangan. Brend nomi faqat
+> brauzer tab sarlavhasida va pastki mayda qatorda («POYTAXT NURI 1» MCHJ) qoladi.
+> Reklamadan kelgan sovuq trafik uchun ekranning eng qimmat joyi taklifga berilgan.
 
 `.ticker` — sahifaning eng tepasidagi oltin lenta, qulayliklar uzluksiz suriladi.
 Ro'yxat **ikki marta takrorlangan**, chunki animatsiya `translateX(-50%)` bilan ishlaydi —
@@ -80,6 +84,13 @@ sakrash paydo bo'ladi.
   `max-height:700px + max-width:859px` (mobil), `max-height:660px + max-width:859px`
   (eng tor — forma sarlavhasi yashiriladi), `max-height:620px + min-width:860px` (past
   desktop oyna). Matn hech qachon qisqartirilmaydi — faqat zichlik oshiriladi.
+- **H1 shrifti `clamp(23px, min(5.9vw, 5.6vh), 46px)`** — kenglik va balandlikning
+  kichigiga qarab o'lchanadi. `vh` bo'lmasa, past-lekin-keng oynada (masalan 900×540)
+  sarlavha 46px bo'lib qolib, sahifa ~90px oshib ketadi. Media query o'rniga shu
+  ishlatilgan, chunki har qanday oyna o'lchamiga o'zi moslashadi.
+- `text-wrap:balance` H1 qatorlarini tenglaydi — «хонадон —» kabi yolg'iz bo'lak
+  qolmaydi. H1 ga `max-width` mobilda **qo'yilmaydi** (torayib qator sonini oshiradi),
+  faqat desktopda `20ch`.
 - Matn o'zgartirilsa **balandlik qayta tekshirilishi shart**. Tekshirish usuli:
   `document.documentElement.scrollHeight - innerHeight` = 0 bo'lishi kerak.
   O'lchamlar: 360×640, 375×667, 390×844, 768×1024, 900×540, 1280×720, 1440×900.
