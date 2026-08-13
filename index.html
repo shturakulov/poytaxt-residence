@@ -9,7 +9,7 @@
 <meta property="og:description" content="Давлатимиз раҳбари ташаббуси билан янгиланаётган Вокзал орти массивида. Таъмирли 100 та хонадонга чегирма.">
 <meta property="og:type" content="website">
 
-<link rel="preload" as="image" href="assets/courtyard.jpg" fetchpriority="high">
+<link rel="preload" as="image" href="assets/courtyard-hero.jpg" fetchpriority="high">
 
 <!-- Telegram Mini App SDK (бот ичида очилса ишлайди, оддий браузерда зарарсиз) -->
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
@@ -65,10 +65,11 @@ h1{font-family:'Cormorant',Georgia,serif;font-weight:700;line-height:1.08;letter
 .bg{position:relative;flex:none;height:var(--photo-h);z-index:0;overflow:hidden}
 /* Расм — ОҚИМДАГИ алоҳида тасма, фон эмас. Шу сабабли матн ҳеч қачон расм
    устига тушмайди ва ҳар экран учун фоиз ҳисоблаш керак эмас.
-   Тасма нисбати (~1.54) расм нисбатига (1.53) деярли тенг — ҳовли деярли
-   кесилмасдан тўлиқ кўринади. */
-.bg img{width:100%;height:100%;object-fit:cover;object-position:50% 52%;
-  filter:saturate(1.04);animation:zoomMob 22s ease-out forwards}
+   object-position пастроққа сурилган: ҳовли, фонтан ва одамлар кадрга тушсин,
+   осмон эса кам жой олсин. filter — ранглар жонлироқ кўринсин учун. */
+.bg img{width:100%;height:100%;object-fit:cover;object-position:50% 100%;
+  filter:saturate(1.16) contrast(1.05) brightness(1.02);
+  animation:zoomMob 22s ease-out forwards}
 @keyframes zoomMob{from{transform:scale(1.06)}to{transform:scale(1)}}
 @keyframes zoomDesk{from{transform:scale(1.07)}to{transform:scale(1)}}
 /* тасма пастида қисқа сўниш — крем сиртга юмшоқ уланиш */
@@ -142,17 +143,30 @@ h1 em{font-style:italic;color:var(--gold-ink)}
 
 .legal{flex:none;text-align:center;font-size:11.5px;color:var(--ink-3);padding-top:4px}
 
-/* ---------- муваффақият ---------- */
-.done{display:none;text-align:center;padding:6px 2px}
-.done.show{display:block}
-.card.sent .form-body{display:none}
-.done .ico{width:60px;height:60px;border-radius:50%;margin:0 auto 14px;display:grid;place-items:center;
-  background:var(--gold-soft);border:1px solid var(--gold);font-size:29px;color:var(--gold-ink);animation:pop .45s ease}
-@keyframes pop{0%{transform:scale(0)}70%{transform:scale(1.14)}100%{transform:scale(1)}}
-.done h2{color:var(--ink);margin-bottom:7px}
-.done p{color:var(--ink-2);font-size:14px}
+/* ---------- тўлиқ экранли РАҲМАТ саҳифаси ---------- */
+.thanks{position:fixed;inset:0;z-index:200;display:none;background:var(--bg);
+  align-items:center;justify-content:center;padding:26px 22px calc(26px + env(safe-area-inset-bottom));
+  overflow-y:auto}
+.thanks.show{display:flex;animation:fadeIn .35s ease both}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.thanks__in{width:100%;max-width:420px;text-align:center;animation:riseIn .5s cubic-bezier(.22,.9,.34,1) .06s both}
+@keyframes riseIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.thanks__ico{width:82px;height:82px;border-radius:50%;margin:0 auto 20px;display:grid;place-items:center;
+  background:var(--dark);color:var(--on-dark);font-size:38px;line-height:1;animation:pop .5s ease .1s both}
+@keyframes pop{0%{transform:scale(0)}70%{transform:scale(1.12)}100%{transform:scale(1)}}
+.thanks h2{font-family:'Cormorant',Georgia,serif;font-size:clamp(30px,8vw,42px);font-weight:700;
+  line-height:1.12;color:var(--ink);letter-spacing:.2px}
+.thanks__lead{margin-top:14px;font-size:clamp(15px,4vw,17px);line-height:1.5;color:var(--ink-2)}
+.thanks__note{margin-top:11px;font-size:12.5px;color:var(--ink-3);line-height:1.45}
+.thanks .btn{margin-top:24px}
 .btn-ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line-2);box-shadow:none}
 .btn-ghost:hover{border-color:var(--dark);background:rgba(42,32,24,.04);transform:none;box-shadow:none}
+@media(max-height:640px){
+  .thanks__ico{width:62px;height:62px;font-size:29px;margin-bottom:14px}
+  .thanks h2{font-size:26px}
+  .thanks__lead{margin-top:10px;font-size:14px}
+  .thanks .btn{margin-top:16px}
+}
 
 /* ---------- киришда пайдо бўлиш ---------- */
 .in{opacity:0;transform:translateY(14px);animation:rise .55s cubic-bezier(.22,.9,.34,1) forwards}
@@ -232,7 +246,7 @@ h1 em{font-style:italic;color:var(--gold-ink)}
   </div>
 </div>
 
-<div class="bg"><img src="assets/courtyard.jpg" alt="Poytaxt Residence — ички ҳовли, боғ ва болалар майдончаси" fetchpriority="high"></div>
+<div class="bg"><img src="assets/courtyard-hero.jpg" alt="Poytaxt Residence — ички ҳовли, боғ ва болалар майдончаси" fetchpriority="high"></div>
 
 <main class="shell">
 
@@ -265,12 +279,6 @@ h1 em{font-style:italic;color:var(--gold-ink)}
             <div class="msg" id="msg"></div>
           </form>
         </div>
-        <div class="done" id="done">
-          <div class="ico">✓</div>
-          <h2>Ариза қабул қилинди!</h2>
-          <p>Менежеримиз тез орада боғланиб, чегирма ва тўлов режасини айтиб беради.</p>
-          <a class="btn btn-ghost btn-block" href="https://t.me/poytaxt_residence" target="_blank" rel="noopener">Telegram каналимизга обуна бўлиш</a>
-        </div>
       </div>
 
     </div>
@@ -279,6 +287,18 @@ h1 em{font-style:italic;color:var(--gold-ink)}
 
   <div class="legal">«POYTAXT NURI 1» МЧЖ · Самарқанд ш., вокзал орти</div>
 </main>
+
+<!-- Тўлиқ экранли раҳмат саҳифаси. Ариза юборилгач бутун экранни эгаллайди:
+     фойдаланувчи "юборилдими?" деб иккиланмайди ва такрор юбормайди. -->
+<div class="thanks" id="thanks" role="status" aria-live="polite" aria-hidden="true">
+  <div class="thanks__in">
+    <div class="thanks__ico">✓</div>
+    <h2 id="thanksTitle">Раҳмат!</h2>
+    <p class="thanks__lead">Аризангиз қабул қилинди. Менежеримиз яқин соатларда қўнғироқ қилиб, чегирма ва тўлов режасини айтиб беради.</p>
+    <a class="btn btn-gold btn-block" href="https://t.me/poytaxt_residence" target="_blank" rel="noopener">Telegram каналимизга обуна бўлиш</a>
+    <p class="thanks__note">Лойиҳа янгиликлари ва қурилиш жараёни шу ерда эълон қилиб борилади</p>
+  </div>
+</div>
 
 <script>
 /* ===== CONFIG ===== */
@@ -328,6 +348,20 @@ document.querySelectorAll(".field input").forEach(el=>{
   el.addEventListener("focus", ()=>setTimeout(()=>el.scrollIntoView({block:"center",behavior:"smooth"}), 300));
 });
 
+/* ===== тўлиқ экранли раҳмат саҳифаси =====
+   Исм киритилган бўлса, сарлавҳа шахсийлаштирилади. Ортга қайтиш тугмаси йўқ:
+   ариза юборилган, саҳифанинг вазифаси тугаган. */
+function showThanks_(name){
+  const t = document.getElementById("thanks");
+  const first = (name || "").split(/\s+/)[0];
+  if (first && first.length >= 2) {
+    document.getElementById("thanksTitle").textContent = "Раҳмат, " + first + "!";
+  }
+  t.classList.add("show");
+  t.setAttribute("aria-hidden", "false");
+  document.body.style.overflow = "hidden";
+}
+
 /* ===== юбориш → Google Sheets ===== */
 const form = document.getElementById("leadForm"),
       msg  = document.getElementById("msg"),
@@ -354,8 +388,7 @@ form.addEventListener("submit", async function(e){
       await fetch(CONFIG.APPS_SCRIPT_URL, {method:"POST", mode:"no-cors",
         headers:{"Content-Type":"text/plain;charset=utf-8"}, body:JSON.stringify(payload)});
     }
-    document.getElementById("card").classList.add("sent");
-    document.getElementById("done").classList.add("show");
+    showThanks_(name.value.trim());
     try{ if(window.tgp) tgp('event','vdowZRja-cThTB0QX'); }catch(e){}   // Telegram Ads — Lead
     if(tg){ try{ tg.HapticFeedback.notificationOccurred("success"); }catch(e){} }
   }catch(err){

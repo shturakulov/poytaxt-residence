@@ -54,8 +54,8 @@ leveri (formaga scroll qilish oqimi odatda 30–50% yo'qotadi).
 ```
 poytaxt-residence/
 ├── index.html          # Butun sayt (HTML+CSS+JS bitta faylda)
-├── assets/             # Renderlar. Faqat courtyard.jpg ishlatiladi (fon).
-│                       #   Qolgan 5 tasi hozir ishlatilmaydi — pastga qara.
+├── assets/             # Faqat courtyard-hero.jpg ishlatiladi (tepadagi rasm tasmasi).
+│                       #   Qolgan 8 tasi hozir ishlatilmaydi — pastga qara.
 ├── api/bot.js          # Telegram bot webhook (Vercel serverless)
 ├── apps-script/Code.gs # Google Apps Script — formani Sheets'ga yozadi
 │                       #   Sheets'dan amoCRM'ga "Google Таблицы" widgeti ko'chiradi
@@ -71,10 +71,26 @@ tanqislik bari → **forma kartasi** → pastki mayda qator.
 Forma kartasida **sarlavha yo'q** — tugma matni («Чегирмани банд қилиш») aynan
 shu gapni aytardi, ikkita bir xil jumla joy ham, diqqat ham yer edi.
 
+**Ariza yuborilgach `.thanks` — to'liq ekranli rahmat sahifasi** ochiladi
+(`position:fixed`, butun ekran, body scroll bloklanadi). Ilgari muvaffaqiyat
+xabari forma kartasi ichida chiqardi va bilinmasdi. Sarlavha kiritilgan ismning
+birinchi so'zi bilan shaxsiylashtiriladi («Раҳмат, Жасур!»). Ortga qaytish
+tugmasi ataylab yo'q — ariza yuborilgan, sahifaning vazifasi tugagan.
+
+### Rasm (`courtyard-hero.jpg`)
+Manba: `~/Desktop/land 1.jpeg` (5504×3072). Veb uchun `sips` bilan 1400px
+kenglikka, sifat 55 ga siqilgan → 280 KB.
+
+- `object-position: 50% 100%` — tasma rasmdan pastroq nisbatda bo'lgani uchun
+  vertikal kesish bor; 100% da hovli, maydoncha, fontan va odamlar kadrga tushadi.
+  Kichikroq qiymatda faqat binolar ko'rinib, «hayot» hissi yo'qoladi.
+- `filter: saturate(1.16) contrast(1.05) brightness(1.02)` — ranglarni jonlantiradi.
+  Faylni qayta tahrirlash o'rniga CSS'da qilingan: darrov sozlanadi.
+
 > **Galereya modali olib tashlangan** (2026-08-12). «Лойиҳани кўриш» tugmasi kerak
 > emas edi, u esa modalni ochadigan yagona joy edi — shuning uchun modal HTML/CSS va
 > ~35 qator JS ham o'chirildi. `assets/` dagi 5 ta galereya rasmi joyida qoldi, lekin
-> **sahifada ishlatilmaydi**: faqat `courtyard.jpg` fon sifatida yuklanadi.
+> **sahifada ishlatilmaydi**: faqat `courtyard-hero.jpg` yuklanadi.
 > Galereya qaytadan kerak bo'lsa, git tarixidan olish mumkin (`00c6c21` dan oldingi).
 
 > Sahifada **logotip/brend qatori yo'q** — ataylab olib tashlangan. Brend nomi faqat
