@@ -49,6 +49,7 @@ poytaxt-residence/
 │                       #   Qolgan 5 tasi hozir ishlatilmaydi — pastga qara.
 ├── api/bot.js          # Telegram bot webhook (Vercel serverless)
 ├── apps-script/Code.gs # Google Apps Script — formani Sheets'ga yozadi
+│                       #   Sheets'dan amoCRM'ga "Google Таблицы" widgeti ko'chiradi
 ├── netlify.toml        # (eski; hozir Vercel'da turibdi)
 └── CLAUDE.md           # (shu fayl)
 ```
@@ -79,6 +80,23 @@ sakrash paydo bo'ladi.
   qulay — mijozning haqiqiy jadvaliga soxta lead tushmaydi.
 - `TOTAL` / `REMAINING` — aksiya xonadonlari soni. Tanqislik bari shu ikkisidan
   hisoblanadi. **Mijoz raqamni yangilaganda faqat shu yerni o'zgartirish kerak.**
+
+## amoCRM integratsiyasi
+Lidlar amoCRM'ga **Sheets orqali** boradi: sayt → Apps Script → Google Sheets →
+amoCRM'ning «Google Таблицы» widgeti. Token yo'q, backend kod yo'q.
+
+⚠️ **Shu sababli Sheets ustunlari o'zgartirilmasin.** Jadval widget uchun ataylab
+3 ta ustunga qisqartirilgan: `Ismi`, `Raqami`, `Sana/vaqt`. Nomlar ham aynan shunday —
+widget sozlamasi shu nomlarga bog'langan. Ustun qo'shish/nomini o'zgartirish widgetni
+buzadi.
+
+Sayt hali ham `source`, `tg_id`, `tg_username`, `page` yuboradi, lekin `Code.gs`
+ularni jadvalga yozmaydi. Manba kerak bo'lsa — widget sozlamasidagi **teg** orqali,
+yoki `Code.gs` da bitta qator qo'shib qaytarish mumkin.
+
+Repozitoriyda `amocrm-mcp/` bor, lekin **u bu ishga aloqador emas** — faqat `GET`
+so'rov yuboradigan, tahlil uchun mo'ljallangan read-only MCP server. U bilan lid
+yaratib bo'lmaydi.
 
 ### Muhim texnik nuqtalar
 - **`min-height:100dvh` (`svh` emas).** Mobil klaviatura ochilganda viewport qisqaradi;
