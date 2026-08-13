@@ -43,11 +43,11 @@
   --line:rgba(42,32,24,.14);
   --line-2:rgba(42,32,24,.22);
   --gold-soft:rgba(184,137,27,.14);
-  --photo-h:19vh;        /* тепадаги расм тасмаси; паст экранларда кичраяди */
+  --photo-h:30vh;        /* расм тасмасининг ЮҚОРИ чегараси (одатда aspect-ratio ҳал қилади) */
   font-synthesis:none;
 }
-@media(max-height:700px){:root{--photo-h:15vh}}
-@media(max-height:660px){:root{--photo-h:14vh}}
+@media(max-height:700px){:root{--photo-h:21vh}}
+@media(max-height:660px){:root{--photo-h:18vh}}
 *{box-sizing:border-box;margin:0;padding:0}
 html{-webkit-text-size-adjust:100%}
 body{
@@ -62,7 +62,11 @@ h1{font-family:'Cormorant',Georgia,serif;font-weight:700;line-height:1.08;letter
 
 /* ---------- фон ---------- */
 /* overflow:hidden шарт — расм scale билан катталаштирилган, усиз идишдан тошиб чиқади */
-.bg{position:relative;flex:none;height:var(--photo-h);z-index:0;overflow:hidden}
+/* aspect-ratio расм нисбатига ТЕНГ — шунда cover ҳеч нарсани кесмайди ва
+   бино тепасидан пастигача тўлиқ кўринади. max-height паст экранлар учун
+   хавфсизлик чегараси: у ерда озгина кесилади, лекин саҳифа бузилмайди. */
+.bg{position:relative;flex:none;aspect-ratio:1400/781;height:auto;
+  max-height:var(--photo-h);z-index:0;overflow:hidden}
 /* Расм — ОҚИМДАГИ алоҳида тасма, фон эмас. Шу сабабли матн ҳеч қачон расм
    устига тушмайди ва ҳар экран учун фоиз ҳисоблаш керак эмас.
    object-position пастроққа сурилган: ҳовли, фонтан ва одамлар кадрга тушсин,
@@ -91,17 +95,24 @@ h1{font-family:'Cormorant',Georgia,serif;font-weight:700;line-height:1.08;letter
 /* ---------- каркас ---------- */
 .shell{position:relative;z-index:2;flex:1;max-width:1180px;width:100%;margin:0 auto;
   display:flex;flex-direction:column;
-  padding:16px 18px calc(16px + env(safe-area-inset-bottom))}
-.content{flex:1;display:flex;flex-direction:column;justify-content:flex-end;gap:13px;padding:12px 0 8px}
+  padding:12px 18px calc(14px + env(safe-area-inset-bottom))}
+.content{flex:1;display:flex;flex-direction:column;justify-content:flex-end;gap:12px;padding:8px 0 6px}
 
 /* ---------- чап устун ---------- */
-.badge{display:inline-flex;align-self:flex-start;background:var(--gold-soft);
-  color:var(--gold-ink);border:1px solid rgba(184,137,27,.42);
-  font-weight:800;font-size:11.5px;letter-spacing:.5px;padding:6px 13px;border-radius:999px}
+/* Badge расм тасмасининг ичида, пастки чап бурчакда. Ўз ҚАТТИҚ фони бор яроқ —
+   шунинг учун расм устида ҳам тоза ўқилади ("матн расм устида турмайди"
+   қоидаси эркин матнга тегишли, ўз фони бор ёрлиққа эмас).
+   Бу тартиб контентдан ~44px бўшатади: шу ҳисобга бино тўлиқ кўринади. */
+.badge{position:absolute;left:18px;bottom:14px;z-index:2;display:inline-flex;
+  background:var(--surface);color:var(--gold-ink);border:1px solid rgba(184,137,27,.5);
+  box-shadow:0 3px 10px rgba(42,32,24,.18);
+  font-weight:800;font-size:11.5px;letter-spacing:.5px;padding:7px 13px;border-radius:999px}
+/* десктоп нусхаси: оқимда, контент устунида (мобилда яширин) */
+.badge--desk{display:none;position:static;align-self:flex-start;box-shadow:none;margin-bottom:12px}
 /* text-wrap:balance — қаторларни тенг бўлади, ёлғиз бўлак қолмайди.
    Шрифт кенглик ва баландликнинг кичигига қараб ўлчанади (min(vw,vh)) —
    паст, лекин кенг ойнада ҳам сарлавҳа экрандан чиқиб кетмайди. */
-h1{font-size:clamp(27px,min(7.4vw,5.4vh),44px);margin-top:12px;line-height:1.16;text-wrap:balance}
+h1{font-size:clamp(27px,min(7.4vw,5.4vh),44px);line-height:1.16;text-wrap:balance}
 h1 em{font-style:italic;color:var(--gold-ink)}
 .sub{margin-top:10px;font-size:clamp(14.5px,3.9vw,17px);line-height:1.44;color:var(--ink-2);max-width:42ch;
   font-weight:500}
@@ -198,8 +209,11 @@ h1 em{font-style:italic;color:var(--gold-ink)}
 
 /* ---------- десктоп ---------- */
 @media(min-width:860px){
-  /* десктопда расм тасма эмас, тўлиқ фон — чапдан крем парда билан */
-  .bg{position:fixed;inset:0;height:auto}
+  /* десктопда расм тасма эмас, тўлиқ фон — чапдан крем парда билан.
+     aspect-ratio ва max-height бекор қилинади, акс ҳолда фон кичик қутига айланади. */
+  .bg{position:fixed;inset:0;aspect-ratio:auto;height:auto;max-height:none}
+  .bg .badge{display:none}          /* тасма ичидаги badge фақат мобил учун */
+  .badge--desk{display:inline-flex} /* десктопда badge контент устунида */
   .bg img{object-position:center;animation-name:zoomDesk}
   .bg::after{top:0;height:100%;background:
     linear-gradient(90deg,var(--bg) 0%,var(--bg) 40%,rgba(250,247,242,.58) 68%,rgba(250,247,242,.18) 100%),
@@ -246,14 +260,17 @@ h1 em{font-style:italic;color:var(--gold-ink)}
   </div>
 </div>
 
-<div class="bg"><img src="assets/courtyard-hero.jpg" alt="Poytaxt Residence — ички ҳовли, боғ ва болалар майдончаси" fetchpriority="high"></div>
+<div class="bg">
+  <img src="assets/courtyard-hero.jpg" alt="Poytaxt Residence — ички ҳовли, боғ ва болалар майдончаси" fetchpriority="high">
+  <span class="badge in">Таъмирли 100 та хонадонга чегирма</span>
+</div>
 
 <main class="shell">
 
   <div class="content">
 
     <div class="col">
-      <span class="badge in">Таъмирли 100 та хонадонга чегирма</span>
+      <span class="badge badge--desk in">Таъмирли 100 та хонадонга чегирма</span>
       <h1 class="in" style="animation-delay:.06s">Ҳар куни <em>қулай ва хотиржам</em> ҳаётни ҳис қилиб яшайсиз</h1>
       <p class="sub in" style="animation-delay:.12s">Давлатимиз раҳбари ташаббуси билан янгиланаётган Вокзал орти массивида қурилмоқда.</p>
       <div class="scarce in" style="animation-delay:.18s">

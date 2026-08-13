@@ -81,9 +81,15 @@ tugmasi ataylab yo'q — ariza yuborilgan, sahifaning vazifasi tugagan.
 Manba: `~/Desktop/land 1.jpeg` (5504×3072). Veb uchun `sips` bilan 1400px
 kenglikka, sifat 55 ga siqilgan → 280 KB.
 
-- `object-position: 50% 100%` — tasma rasmdan pastroq nisbatda bo'lgani uchun
-  vertikal kesish bor; 100% da hovli, maydoncha, fontan va odamlar kadrga tushadi.
-  Kichikroq qiymatda faqat binolar ko'rinib, «hayot» hissi yo'qoladi.
+- **`.bg` da `aspect-ratio:1400/781` — rasm nisbatiga TENG.** Shunda `cover` hech
+  narsani kesmaydi va bino tepasidan pastigacha to'liq ko'rinadi. Ilgari tasma
+  qat'iy `vh` balandlikda edi va binolarning yarmi kesilardi.
+  `max-height:var(--photo-h)` — past ekranlar uchun xavfsizlik chegarasi: u yerda
+  ozgina kesiladi, lekin forma joysiz qolmaydi. 844px+ telefonlarda to'liq ko'rinadi.
+- `object-position: 50% 100%` — kesish bo'lganda pastdan tekislanadi, ya'ni
+  faqat tepadagi osmon kesiladi.
+- ⚠️ Desktop qoidasida `aspect-ratio:auto; max-height:none` **shart** — aks holda
+  to'liq fon kichik qutiga aylanib qoladi.
 - `filter: saturate(1.16) contrast(1.05) brightness(1.02)` — ranglarni jonlantiradi.
   Faylni qayta tahrirlash o'rniga CSS'da qilingan: darrov sozlanadi.
 
