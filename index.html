@@ -6,7 +6,7 @@
 <title>Poytaxt Residence — Самарқанд, Вокзал орти массивида хонадонлар</title>
 <meta name="description" content="Давлатимиз раҳбари ташаббуси билан янгиланаётган Вокзал орти массивида қурилмоқда. Хонадон таъмирланган ҳолда топширилади, 60 ойгача фоизсиз бўлиб тўлаш.">
 <meta property="og:title" content="Poytaxt Residence — ҳар куни қулай ва хотиржам ҳаёт">
-<meta property="og:description" content="Давлатимиз раҳбари ташаббуси билан янгиланаётган Вокзал орти массивида. Таъмирли 100 та хонадонга чегирма.">
+<meta property="og:description" content="Давлатимиз раҳбари ташаббуси билан янгиланаётган Вокзал орти массивида. 100 хонадонга чегирма.">
 <meta property="og:type" content="website">
 
 <link rel="preload" as="image" href="assets/courtyard-hero.jpg" fetchpriority="high">
@@ -71,13 +71,15 @@ h1{font-family:'Cormorant',Georgia,serif;font-weight:700;line-height:1.08;letter
    устига тушмайди ва ҳар экран учун фоиз ҳисоблаш керак эмас.
    object-position пастроққа сурилган: ҳовли, фонтан ва одамлар кадрга тушсин,
    осмон эса кам жой олсин. filter — ранглар жонлироқ кўринсин учун. */
+/* Мобилда яқинлаштириш анимацияси ЙЎҚ. У scale(1.06) дан бошланарди, яъни
+   саҳифа очилган заҳоти расм 6% катта бўлиб, бинонинг тепаси кесиларди —
+   ва фақат 22 сониядан кейин жойига тушарди. Ҳеч ким бунча кутмайди. */
 .bg img{width:100%;height:100%;object-fit:cover;object-position:50% 100%;
-  filter:saturate(1.16) contrast(1.05) brightness(1.02);
-  animation:zoomMob 22s ease-out forwards}
-@keyframes zoomMob{from{transform:scale(1.06)}to{transform:scale(1)}}
+  filter:saturate(1.16) contrast(1.05) brightness(1.02)}
 @keyframes zoomDesk{from{transform:scale(1.07)}to{transform:scale(1)}}
-/* тасма пастида қисқа сўниш — крем сиртга юмшоқ уланиш */
-.bg::after{content:"";position:absolute;left:0;right:0;bottom:0;height:42px;
+/* Сўниш ҚИСҚА (14px). Аввал 42px эди ва расмнинг энг чиройли пастки қисми —
+   фонтан, олдинги план — крем рангга ювилиб кетарди. */
+.bg::after{content:"";position:absolute;left:0;right:0;bottom:0;height:14px;
   background:linear-gradient(180deg,rgba(250,247,242,0),var(--bg))}
 @media(prefers-reduced-motion:reduce){.bg img{animation:none}}
 
@@ -103,7 +105,7 @@ h1{font-family:'Cormorant',Georgia,serif;font-weight:700;line-height:1.08;letter
    шунинг учун расм устида ҳам тоза ўқилади ("матн расм устида турмайди"
    қоидаси эркин матнга тегишли, ўз фони бор ёрлиққа эмас).
    Бу тартиб контентдан ~44px бўшатади: шу ҳисобга бино тўлиқ кўринади. */
-.badge{position:absolute;left:18px;bottom:14px;z-index:2;display:inline-flex;
+.badge{position:absolute;left:18px;bottom:24px;z-index:2;display:inline-flex;
   background:var(--surface);color:var(--gold-ink);border:1px solid rgba(184,137,27,.5);
   box-shadow:0 3px 10px rgba(42,32,24,.18);
   font-weight:800;font-size:11.5px;letter-spacing:.5px;padding:7px 13px;border-radius:999px}
@@ -214,7 +216,8 @@ h1 em{font-style:italic;color:var(--gold-ink)}
   .bg{position:fixed;inset:0;aspect-ratio:auto;height:auto;max-height:none}
   .bg .badge{display:none}          /* тасма ичидаги badge фақат мобил учун */
   .badge--desk{display:inline-flex} /* десктопда badge контент устунида */
-  .bg img{object-position:center;animation-name:zoomDesk}
+  /* базада animation олиб ташланган, шунинг учун бу ерда тўлиқ ёзилади */
+  .bg img{object-position:center;animation:zoomDesk 20s ease-out forwards}
   .bg::after{top:0;height:100%;background:
     linear-gradient(90deg,var(--bg) 0%,var(--bg) 40%,rgba(250,247,242,.58) 68%,rgba(250,247,242,.18) 100%),
     linear-gradient(180deg,rgba(250,247,242,.26) 0%,rgba(250,247,242,.06) 42%,rgba(250,247,242,.52) 100%)}
@@ -262,7 +265,7 @@ h1 em{font-style:italic;color:var(--gold-ink)}
 
 <div class="bg">
   <img src="assets/courtyard-hero.jpg" alt="Poytaxt Residence — ички ҳовли, боғ ва болалар майдончаси" fetchpriority="high">
-  <span class="badge in">Таъмирли 100 та хонадонга чегирма</span>
+  <span class="badge in">100 хонадонга чегирма</span>
 </div>
 
 <main class="shell">
@@ -270,7 +273,7 @@ h1 em{font-style:italic;color:var(--gold-ink)}
   <div class="content">
 
     <div class="col">
-      <span class="badge badge--desk in">Таъмирли 100 та хонадонга чегирма</span>
+      <span class="badge badge--desk in">100 хонадонга чегирма</span>
       <h1 class="in" style="animation-delay:.06s">Ҳар куни <em>қулай ва хотиржам</em> ҳаётни ҳис қилиб яшайсиз</h1>
       <p class="sub in" style="animation-delay:.12s">Давлатимиз раҳбари ташаббуси билан янгиланаётган Вокзал орти массивида қурилмоқда.</p>
       <div class="scarce in" style="animation-delay:.18s">
