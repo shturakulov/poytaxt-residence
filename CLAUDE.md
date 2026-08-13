@@ -35,15 +35,20 @@ leveri (formaga scroll qilish oqimi odatda 30–50% yo'qotadi).
 
 ## Til va uslub
 - Sayt matni **kirill** alifbosida (uz-Cyrl).
-- Dizayn: **iliq va ochiq** — krem fon (`#FAF6EF`) + oltin aksent (`#C9A227`).
-  2026-08-12 da to'q navy palitradan o'tildi.
-  ⚠️ Ochiq fonda oltin **matn** kontrasti yetmaydi, shuning uchun ikkita token bor:
-  `--gold` (badge/tugma to'ldirishi uchun) va `--gold-ink` (`#8A6B12`, oltin matn uchun).
-  Rang o'zgartirilsa kontrast qayta o'lchansin — barcha matn ≥4.5:1 bo'lishi kerak.
+- Dizayn: **iliq va ochiq** — krem fon (`#FAF7F2`), iliq qora matn (`#241C14`).
+- **Sayt mobil uchun qilinadi — trafikning 95% telefon.** Desktop ikkinchi darajali;
+  qaror mobil bilan desktop o'rtasida bo'lsa, doim mobil tanlanadi.
+- ⚠️ **Oltin — faqat aksent, tugma emas.** Asosiy tugma sahifadagi **eng to'q**
+  element (`--dark #2A2018`), chunki krem fonda oltin tugma ajralib turmasdi va
+  «bosiladigan» bo'lib ko'rinmasdi. Lenta ham to'q — oltin faqat badge, progress
+  va sarlavhadagi kursiv so'zlar uchun.
+- Ochiq fonda oltin **matn** kontrasti yetmaydi, shuning uchun ikkita token:
+  `--gold` (to'ldirish) va `--gold-ink` `#8A6410` (matn).
 - Shriftlar: Cormorant (sarlavhalar), Manrope (matn).
 - **Emoji ishlatilmaydi** — premium brend uchun arzonlashtiradi.
-- **Sahifada faqat BITTA narsa tugmaga o'xshaydi** — oltin «Чегирмани банд қилиш».
-  Qolgani (Лойиҳани кўриш, telefon) matn havolasi.
+- **Sahifada faqat BITTA bosiladigan element bor** — to'q «Чегирмани банд қилиш».
+  Boshqa tugma ham, havola ham yo'q. Yangi havola qo'shish taklif qilinsa, avval
+  o'ylab ko'r: u asosiy tugmadan e'tiborni tortadimi?
 
 ## Fayl tuzilmasi
 ```
@@ -60,8 +65,11 @@ poytaxt-residence/
 
 ## index.html tuzilmasi
 Bir ekranli tartib (yuqoridan pastga):
-**aylanma lenta (`.ticker`)** → oltin badge → H1 → subheadline → tanqislik bari →
-**forma kartasi** → pastki mayda qator.
+**to'q lenta (`.ticker`)** → **rasm tasmasi (`.bg`)** → badge → H1 → subheadline →
+tanqislik bari → **forma kartasi** → pastki mayda qator.
+
+Forma kartasida **sarlavha yo'q** — tugma matni («Чегирмани банд қилиш») aynan
+shu gapni aytardi, ikkita bir xil jumla joy ham, diqqat ham yer edi.
 
 > **Galereya modali olib tashlangan** (2026-08-12). «Лойиҳани кўриш» tugmasi kerak
 > emas edi, u esa modalni ochadigan yagona joy edi — shuning uchun modal HTML/CSS va
@@ -73,7 +81,7 @@ Bir ekranli tartib (yuqoridan pastga):
 > brauzer tab sarlavhasida va pastki mayda qatorda («POYTAXT NURI 1» MCHJ) qoladi.
 > Reklamadan kelgan sovuq trafik uchun ekranning eng qimmat joyi taklifga berilgan.
 
-`.ticker` — sahifaning eng tepasidagi oltin lenta, qulayliklar uzluksiz suriladi.
+`.ticker` — sahifaning eng tepasidagi to'q lenta, qulayliklar uzluksiz suriladi.
 Ro'yxat **ikki marta takrorlangan**, chunki animatsiya `translateX(-50%)` bilan ishlaydi —
 element qo'shsang yoki o'chirsang, ikkala nusxada ham bir xil qil, aks holda aylanishda
 sakrash paydo bo'ladi.
@@ -106,31 +114,38 @@ yaratib bo'lmaydi.
 - **`min-height:100dvh` (`svh` emas).** Mobil klaviatura ochilganda viewport qisqaradi;
   `dvh` u bilan birga qisqaradi, sahifa scroll qilinadigan bo'ladi va tugma klaviatura
   ortida qolib ketmaydi. Bu bir ekranli formalarning klassik bug'i — tekshirilgan.
-- **Uch bosqichli siqish.** Media query'lar kenglik bo'yicha ham ajratilgan, aks holda
+- **Siqish bosqichlari.** Media query'lar kenglik bo'yicha ham ajratilgan, aks holda
   desktop qoidalari past ekran qoidalarini bekor qilib overflow beradi:
-  `max-height:700px + max-width:859px` (mobil), `max-height:660px + max-width:859px`
-  (eng tor — forma sarlavhasi yashiriladi), `max-height:620px + min-width:860px` (past
-  desktop oyna). Matn hech qachon qisqartirilmaydi — faqat zichlik oshiriladi.
-- **H1 shrifti `clamp(23px, min(5.9vw, 5.6vh), 46px)`** — kenglik va balandlikning
+  `max-height:700px + max-width:859px` (asosiy mobil siqish — 667 va 640 ekranlar
+  ikkovi ham shu darajani talab qiladi), `max-height:660px + max-width:859px`
+  (qo'shimcha ozgina), `max-height:620px + min-width:860px` (past desktop oyna).
+  Rasm tasmasi ham kichrayadi: `--photo-h` 19vh → 15vh → 14vh.
+  **Matn hech qachon qisqartirilmaydi — faqat zichlik oshiriladi.**
+- **H1 shrifti `clamp(27px, min(7.4vw, 5.4vh), 44px)`** — kenglik va balandlikning
   kichigiga qarab o'lchanadi. `vh` bo'lmasa, past-lekin-keng oynada (masalan 900×540)
-  sarlavha 46px bo'lib qolib, sahifa ~90px oshib ketadi. Media query o'rniga shu
+  sarlavha eng katta qiymatda qolib, sahifa ~90px oshib ketadi. Media query o'rniga shu
   ishlatilgan, chunki har qanday oyna o'lchamiga o'zi moslashadi.
 - `text-wrap:balance` H1 qatorlarini tenglaydi — «хонадон —» kabi yolg'iz bo'lak
   qolmaydi. H1 ga `max-width` mobilda **qo'yilmaydi** (torayib qator sonini oshiradi),
   faqat desktopda `20ch`.
-- **Fon rasmi `transform: scale()` bilan yaqinlashtirilgan.** Portret ekranda
-  `object-fit:cover` rasmning butun balandligini ko'rsatadi, shuning uchun
-  `object-position` vertikal bo'yicha umuman ishlamaydi — kadrni tanlash uchun
-  yagona yo'l scale + `transform-origin`. Mobilda `scale(1.44)`/origin `50% 66%`
-  (hovli, bog', odamlar), desktopda yaqinlashtirish kerak emas (`zoomDesk`).
-  `.bg` da `overflow:hidden` **shart**, aks holda kattalashtirilgan rasm toshib chiqadi.
+- **MATN HECH QACHON RASM USTIDA TURMAYDI.** Bu eng muhim qoida — buzilsa
+  o'qish darhol yomonlashadi. Mobilda rasm **oqimdagi alohida tasma**
+  (`.bg`, balandligi `--photo-h`), ostida esa toza krem sirt. Ilgari rasm to'liq
+  fon edi va sarlavha uning ustida, yarim shaffof gradientda turardi —
+  o'qib bo'lmasdi. Desktopda rasm fon bo'lib qoladi (chapdan krem parda).
+- Tasma nisbati rasm nisbatiga (1.53) yaqin, shuning uchun hovli deyarli
+  kesilmasdan to'liq ko'rinadi. `.bg` da `overflow:hidden` shart.
+- ⚠️ **Kontrastni o'lchaganda matn ostidagi HAQIQIY fonni oling.** Ilgari men
+  matnni krem *tokeniga* nisbatan o'lchab «14:1, zo'r» degan xulosaga kelgandim,
+  aslida matn rasm ustida turardi va haqiqiy kontrast ancha past edi. Endi matn
+  qattiq sirtda bo'lgani uchun token bo'yicha o'lchash to'g'ri.
 - **Balandlikni o'lchashda kirish animatsiyasini yakunlang.** `.in` elementlari
   `translateY(14px)` dan boshlanadi; brauzer paneli yashiringanda animatsiya
   to'xtab qoladi va soxta 3px overflow ko'rsatadi. To'g'ri o'lchash:
   `document.querySelectorAll('.in').forEach(el=>el.getAnimations().forEach(a=>a.finish()))`
 - Matn o'zgartirilsa **balandlik qayta tekshirilishi shart**. Tekshirish usuli:
   `document.documentElement.scrollHeight - innerHeight` = 0 bo'lishi kerak.
-  O'lchamlar: 360×640, 375×667, 390×844, 768×1024, 900×540, 1280×720, 1440×900.
+  O'lchamlar: 360×640, 375×667, 390×844, 414×896, 768×1024, 900×540, 1280×720, 1440×900.
 - **Telegram aniqlash:** `telegram-web-app.js` oddiy brauzerda ham
   `window.Telegram.WebApp` yaratadi. Shuning uchun haqiqiy Mini App faqat bo'sh
   bo'lmagan `initData` bilan aniqlanadi — aks holda barcha lidlar Sheets'ga

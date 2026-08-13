@@ -26,19 +26,28 @@
 /* ============================================================
    POYTAXT RESIDENCE — бир экранли lead-gen саҳифа
    ============================================================ */
+/* Ранг тизими. Асосий қоида: МАТН ҲЕЧ ҚАЧОН РАСМ УСТИДА ТУРМАЙДИ —
+   ҳаммаси қаттиқ крем сирт устида. Расм фақат тепадаги тоза тасмада.
+   Олтин — фақат аксент. Энг тўқ элемент (тугма) энг муҳим ҳаракат. */
 :root{
-  --bg:#FAF6EF;          /* илиқ крем фон */
+  --bg:#FAF7F2;          /* илиқ крем сирт */
   --surface:#FFFFFF;     /* форма картаси */
-  --ink:#2B2118;         /* асосий матн — илиқ қора */
-  --ink-2:#6B5D4B;       /* иккиламчи матн */
-  --gold:#C9A227;        /* тўлдириш: badge, тугма, лента */
-  --gold-2:#A8841C;
-  --gold-ink:#8A6B12;    /* олтин МАТН — крем устида ўқилиши учун тўқроқ */
-  --on-gold:#241B0C;     /* олтин устидаги матн */
-  --line:rgba(168,132,28,.30);
-  --gold-soft:rgba(201,162,39,.12);
+  --ink:#241C14;         /* асосий матн — илиқ қора */
+  --ink-2:#6E6153;       /* иккиламчи матн */
+  --ink-3:#7D6F5C;       /* пастки майда қатор */
+  --dark:#2A2018;        /* лента фони + АСОСИЙ ТУГМА */
+  --dark-2:#3A2D22;
+  --on-dark:#F7F1E6;     /* тўқ устидаги матн */
+  --gold:#B8891B;        /* аксент тўлдириши: badge, progress */
+  --gold-ink:#8A6410;    /* олтин матн (крем устида) */
+  --line:rgba(42,32,24,.14);
+  --line-2:rgba(42,32,24,.22);
+  --gold-soft:rgba(184,137,27,.14);
+  --photo-h:19vh;        /* тепадаги расм тасмаси; паст экранларда кичраяди */
   font-synthesis:none;
 }
+@media(max-height:700px){:root{--photo-h:15vh}}
+@media(max-height:660px){:root{--photo-h:14vh}}
 *{box-sizing:border-box;margin:0;padding:0}
 html{-webkit-text-size-adjust:100%}
 body{
@@ -53,28 +62,27 @@ h1{font-family:'Cormorant',Georgia,serif;font-weight:700;line-height:1.08;letter
 
 /* ---------- фон ---------- */
 /* overflow:hidden шарт — расм scale билан катталаштирилган, усиз идишдан тошиб чиқади */
-.bg{position:fixed;inset:0;z-index:0;overflow:hidden}
-/* Портрет экранда cover расмнинг БУТУН баландлигини кўрсатади, шунинг учун
-   object-position вертикал бўйича ишламайди. Ҳовлининг жонли қисми (фонтан,
-   майдончалар, одамлар) кадрга тушиши учун расм каттартириб яқинлаштирилади. */
-.bg img{width:100%;height:100%;object-fit:cover;object-position:50% 50%;
-  transform-origin:50% 66%;filter:saturate(1.02) brightness(1.04);
-  animation:zoomMob 20s ease-out forwards}
-@keyframes zoomMob{from{transform:scale(1.52)}to{transform:scale(1.44)}}
+.bg{position:relative;flex:none;height:var(--photo-h);z-index:0;overflow:hidden}
+/* Расм — ОҚИМДАГИ алоҳида тасма, фон эмас. Шу сабабли матн ҳеч қачон расм
+   устига тушмайди ва ҳар экран учун фоиз ҳисоблаш керак эмас.
+   Тасма нисбати (~1.54) расм нисбатига (1.53) деярли тенг — ҳовли деярли
+   кесилмасдан тўлиқ кўринади. */
+.bg img{width:100%;height:100%;object-fit:cover;object-position:50% 52%;
+  filter:saturate(1.04);animation:zoomMob 22s ease-out forwards}
+@keyframes zoomMob{from{transform:scale(1.06)}to{transform:scale(1)}}
 @keyframes zoomDesk{from{transform:scale(1.07)}to{transform:scale(1)}}
-/* Юқори қисм очиқ қолади — ҳовли, боғ ва одамлар кўринади.
-   Пастда крем фонга айланади, шунда тўқ матн тоза ўқилади. */
-.bg::after{content:"";position:absolute;inset:0;background:
-  linear-gradient(180deg,rgba(250,246,239,.10) 0%,rgba(250,246,239,.04) 13%,rgba(250,246,239,.80) 32%,
-  rgba(250,246,239,.95) 48%,rgba(250,246,239,.99) 68%,var(--bg) 86%)}
+/* тасма пастида қисқа сўниш — крем сиртга юмшоқ уланиш */
+.bg::after{content:"";position:absolute;left:0;right:0;bottom:0;height:42px;
+  background:linear-gradient(180deg,rgba(250,247,242,0),var(--bg))}
 @media(prefers-reduced-motion:reduce){.bg img{animation:none}}
 
 /* ---------- тепадаги айланма лента ---------- */
+/* Лента тўқ: олтин фақат тугма учун қолсин, акс ҳолда ҳеч нарса ажралиб турмайди */
 .ticker{position:relative;z-index:3;flex:none;overflow:hidden;white-space:nowrap;
-  background:linear-gradient(90deg,var(--gold-2),var(--gold),var(--gold-2));color:var(--on-gold);
-  padding:9px 0;font-weight:800;font-size:12.5px;letter-spacing:.3px}
+  background:var(--dark);color:var(--on-dark);
+  padding:10px 0;font-weight:700;font-size:12.5px;letter-spacing:.2px}
 .ticker__track{display:inline-block;animation:marquee 30s linear infinite}
-.ticker__track span{margin:0 18px}
+.ticker__track span{margin:0 17px}
 @keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @media(prefers-reduced-motion:reduce){.ticker__track{animation:none}}
 @media(max-width:520px){.ticker{font-size:11.5px;padding:8px 0}.ticker__track span{margin:0 13px}}
@@ -83,50 +91,56 @@ h1{font-family:'Cormorant',Georgia,serif;font-weight:700;line-height:1.08;letter
 .shell{position:relative;z-index:2;flex:1;max-width:1180px;width:100%;margin:0 auto;
   display:flex;flex-direction:column;
   padding:16px 18px calc(16px + env(safe-area-inset-bottom))}
-.content{flex:1;display:flex;flex-direction:column;justify-content:flex-end;gap:16px;padding:20px 0 14px}
+.content{flex:1;display:flex;flex-direction:column;justify-content:flex-end;gap:13px;padding:12px 0 8px}
 
 /* ---------- чап устун ---------- */
-.badge{display:inline-flex;align-self:flex-start;background:linear-gradient(135deg,var(--gold),var(--gold-2));
-  color:var(--on-gold);font-weight:800;font-size:11.5px;letter-spacing:.6px;padding:6px 13px;border-radius:999px}
+.badge{display:inline-flex;align-self:flex-start;background:var(--gold-soft);
+  color:var(--gold-ink);border:1px solid rgba(184,137,27,.42);
+  font-weight:800;font-size:11.5px;letter-spacing:.5px;padding:6px 13px;border-radius:999px}
 /* text-wrap:balance — қаторларни тенг бўлади, ёлғиз бўлак қолмайди.
    Шрифт кенглик ва баландликнинг кичигига қараб ўлчанади (min(vw,vh)) —
    паст, лекин кенг ойнада ҳам сарлавҳа экрандан чиқиб кетмайди. */
-h1{font-size:clamp(23px,min(5.9vw,5.6vh),46px);margin-top:11px;line-height:1.14;text-wrap:balance}
+h1{font-size:clamp(27px,min(7.4vw,5.4vh),44px);margin-top:12px;line-height:1.16;text-wrap:balance}
 h1 em{font-style:italic;color:var(--gold-ink)}
-.sub{margin-top:15px;font-size:clamp(13.5px,3.6vw,17px);line-height:1.5;color:var(--ink-2);max-width:42ch;
+.sub{margin-top:10px;font-size:clamp(14.5px,3.9vw,17px);line-height:1.44;color:var(--ink-2);max-width:42ch;
   font-weight:500}
-.scarce{margin-top:12px;max-width:400px}
-.scarce .bar{height:4px;border-radius:999px;background:rgba(107,93,75,.18);overflow:hidden}
-.scarce .bar i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--gold-2),var(--gold))}
-.scarce .lbl{font-size:12px;color:var(--ink-2);margin-top:7px}
-.scarce .lbl b{color:var(--gold-ink);font-weight:700}
+.scarce{margin-top:11px;max-width:400px}
+.scarce .bar{height:5px;border-radius:999px;background:rgba(42,32,24,.12);overflow:hidden}
+.scarce .bar i{display:block;height:100%;border-radius:999px;background:var(--gold)}
+.scarce .lbl{font-size:12.5px;color:var(--ink-2);margin-top:8px}
+.scarce .lbl b{color:var(--gold-ink);font-weight:800}
 
 /* ---------- форма ---------- */
-.card{background:var(--surface);border:1px solid var(--line);
-  border-radius:20px;padding:16px;box-shadow:0 18px 44px -22px rgba(90,70,25,.28),0 2px 8px rgba(90,70,25,.06)}
-.card h2{font-family:'Cormorant',Georgia,serif;font-size:22px;font-weight:700;line-height:1.15;letter-spacing:.2px}
-.field{margin-top:10px}
-.field label{display:block;font-size:12.5px;font-weight:600;margin-bottom:5px;color:var(--ink-2)}
-.field input{width:100%;padding:13px 14px;border-radius:11px;font-size:16px;font-family:'Manrope';
-  background:#FDFBF6;border:1px solid rgba(107,93,75,.28);color:var(--ink);outline:none;transition:border .2s,box-shadow .2s}
-.field input::placeholder{color:#A2937F}
+/* Карта сарлавҳаси йўқ: тугма матни ("Чегирмани банд қилиш") айни шу гапни
+   айтади, иккита деярли бир хил жумла ўрин ҳам, диққат ҳам еб қўярди. */
+.card{background:var(--surface);border:1px solid var(--line-2);
+  border-radius:18px;padding:15px;box-shadow:0 14px 36px -18px rgba(42,32,24,.22),0 1px 3px rgba(42,32,24,.05)}
+.card h2{font-family:'Cormorant',Georgia,serif;font-size:23px;font-weight:700;line-height:1.15;letter-spacing:.2px}
+.field{margin-top:9px}
+.field label{display:block;font-size:13px;font-weight:600;margin-bottom:4px;color:var(--ink-2)}
+.field:first-child{margin-top:0}
+.field input{width:100%;padding:14px;border-radius:11px;font-size:16px;font-family:'Manrope';font-weight:500;
+  background:#FCFAF6;border:1.5px solid var(--line-2);color:var(--ink);outline:none;transition:border .2s,box-shadow .2s}
+.field input::placeholder{color:#9E9081;font-weight:400}
 .field input:focus{border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-soft)}
-.field input.err{border-color:#C0483F;box-shadow:0 0 0 3px rgba(192,72,63,.14)}
+.field input.err{border-color:#B23B31;box-shadow:0 0 0 3px rgba(178,59,49,.14)}
 
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:15px 24px;border-radius:999px;
-  border:none;cursor:pointer;font-family:'Manrope';font-weight:800;font-size:15.5px;letter-spacing:.2px;
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:16px 24px;border-radius:999px;
+  border:none;cursor:pointer;font-family:'Manrope';font-weight:800;font-size:16.5px;letter-spacing:.2px;
   transition:transform .2s,box-shadow .25s;-webkit-tap-highlight-color:transparent}
-.btn-gold{background:linear-gradient(135deg,var(--gold),var(--gold-2));color:var(--on-gold);
-  box-shadow:0 10px 24px -10px rgba(168,132,28,.55)}
-.btn-gold:hover{transform:translateY(-2px);box-shadow:0 16px 32px -12px rgba(168,132,28,.65)}
+/* Саҳифадаги ЭНГ ТЎҚ элемент — шунинг учун дарҳол "босиладиган" бўлиб кўринади.
+   Олтин тугма крем фонда деярли ажралмасди. */
+.btn-gold{background:var(--dark);color:var(--on-dark);
+  box-shadow:0 10px 22px -8px rgba(42,32,24,.42)}
+.btn-gold:hover{background:var(--dark-2);transform:translateY(-2px);box-shadow:0 16px 30px -10px rgba(42,32,24,.5)}
 .btn-gold:active{transform:scale(.98)}
-.btn-gold:disabled{opacity:.6;cursor:default;transform:none}
-.btn-block{width:100%;margin-top:13px}
+.btn-gold:disabled{opacity:.55;cursor:default;transform:none}
+.btn-block{width:100%;margin-top:12px}
 
-.trust{font-size:11.5px;color:var(--ink-2);text-align:center;margin-top:10px;line-height:1.45}
+.trust{font-size:12px;color:var(--ink-2);text-align:center;margin-top:9px;line-height:1.4}
 .msg{text-align:center;font-size:13px;font-weight:600;color:#B23B31;margin-top:9px;min-height:17px}
 
-.legal{flex:none;text-align:center;font-size:11px;color:var(--ink-2);padding-top:4px}
+.legal{flex:none;text-align:center;font-size:11.5px;color:var(--ink-3);padding-top:4px}
 
 /* ---------- муваффақият ---------- */
 .done{display:none;text-align:center;padding:6px 2px}
@@ -135,42 +149,47 @@ h1 em{font-style:italic;color:var(--gold-ink)}
 .done .ico{width:60px;height:60px;border-radius:50%;margin:0 auto 14px;display:grid;place-items:center;
   background:var(--gold-soft);border:1px solid var(--gold);font-size:29px;color:var(--gold-ink);animation:pop .45s ease}
 @keyframes pop{0%{transform:scale(0)}70%{transform:scale(1.14)}100%{transform:scale(1)}}
-.done h2{color:var(--gold-ink);margin-bottom:7px}
-.done p{color:var(--ink-2);font-size:13.5px}
-.btn-ghost{background:transparent;color:var(--ink);border:1px solid rgba(107,93,75,.35)}
-.btn-ghost:hover{border-color:var(--gold);color:var(--gold-ink)}
+.done h2{color:var(--ink);margin-bottom:7px}
+.done p{color:var(--ink-2);font-size:14px}
+.btn-ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line-2);box-shadow:none}
+.btn-ghost:hover{border-color:var(--dark);background:rgba(42,32,24,.04);transform:none;box-shadow:none}
 
 /* ---------- киришда пайдо бўлиш ---------- */
 .in{opacity:0;transform:translateY(14px);animation:rise .55s cubic-bezier(.22,.9,.34,1) forwards}
 @keyframes rise{to{opacity:1;transform:none}}
 @media(prefers-reduced-motion:reduce){.in{animation:none;opacity:1;transform:none}}
 
-/* ---------- паст экранлар (мобил тартиб): заҳира сиқиш ---------- */
+/* ---------- паст экранлар (мобил тартиб): заҳира сиқиш ----------
+   Чегара 700px: 667 (iPhone SE) ва 640 (эски Android) — иккови ҳам кенг
+   тарқалган ва иккови ҳам шу даражадаги зичликни талаб қилади.
+   Матн ҚИСҚАРТИРИЛМАЙДИ — фақат оралиқ ва шрифт кичраяди. */
 @media(max-height:700px) and (max-width:859px){
   .legal{display:none}
-  h1{font-size:clamp(23px,5.9vw,30px);line-height:1.09;margin-top:9px}
-  .shell{padding:12px 16px calc(12px + env(safe-area-inset-bottom))}
-  .content{gap:11px;padding:8px 0 4px}
-  .badge{font-size:11px;padding:5px 12px}
-  .sub{margin-top:8px;font-size:13px;line-height:1.42}
-  .scarce{margin-top:9px}
-  .card{padding:12px 13px}
-  .card h2{font-size:18px}
+  .card h2{display:none}
+  .ticker{padding:7px 0;font-size:11px}
+  .shell{padding:10px 15px calc(10px + env(safe-area-inset-bottom))}
+  .content{gap:10px;padding:7px 0 3px}
+  .badge{font-size:10.5px;padding:4px 11px}
+  h1{line-height:1.1;margin-top:8px}
+  .sub{font-size:13.5px;line-height:1.38;margin-top:8px}
+  .scarce{margin-top:8px}
+  .card{padding:12px}
   .field{margin-top:6px}
   .field label{margin-bottom:4px}
-  .field input{padding:11px 13px}
-  .btn{padding:13px 22px}
-  .btn-block{margin-top:9px}
-  .trust{margin-top:6px;font-size:11px}
+  .field input{padding:11px 12px}
+  .btn{padding:13px 20px;font-size:16px}
+  .btn-block{margin-top:10px}
+  .trust{margin-top:6px;font-size:11.5px}
 }
 
 /* ---------- десктоп ---------- */
 @media(min-width:860px){
-  /* десктопда ойна ландшафт — бутун ҳовли кўринади, яқинлаштириш керак эмас */
-  .bg img{object-position:center;transform-origin:center;animation-name:zoomDesk}
-  .bg::after{background:
-    linear-gradient(90deg,rgba(250,246,239,.97) 0%,rgba(250,246,239,.90) 42%,rgba(250,246,239,.34) 78%,rgba(250,246,239,.18) 100%),
-    linear-gradient(180deg,rgba(250,246,239,.30) 0%,rgba(250,246,239,.06) 34%,rgba(250,246,239,.40) 82%,rgba(250,246,239,.72) 100%)}
+  /* десктопда расм тасма эмас, тўлиқ фон — чапдан крем парда билан */
+  .bg{position:fixed;inset:0;height:auto}
+  .bg img{object-position:center;animation-name:zoomDesk}
+  .bg::after{top:0;height:100%;background:
+    linear-gradient(90deg,var(--bg) 0%,var(--bg) 40%,rgba(250,247,242,.58) 68%,rgba(250,247,242,.18) 100%),
+    linear-gradient(180deg,rgba(250,247,242,.26) 0%,rgba(250,247,242,.06) 42%,rgba(250,247,242,.52) 100%)}
   .shell{padding:26px 34px}
   h1{max-width:20ch}
   .content{display:grid;grid-template-columns:minmax(0,1.06fr) 400px;gap:56px;align-items:center;padding:26px 0}
@@ -179,24 +198,17 @@ h1 em{font-style:italic;color:var(--gold-ink)}
   .legal{text-align:right}
 }
 
-/* энг тор экранлар (360x640 ва ундан паст). Матн қисқартирилмайди — фақат
-   зичлик оширилади. Форма сарлавҳаси яширилади, чунки тугма матни
-   ("Чегирмани банд қилиш") айни шу маънони беради. */
+/* энг тор экранлар (640px ва ундан паст) — қўшимча озгина сиқиш */
 @media(max-height:660px) and (max-width:859px){
-  .card h2{display:none}
-  .ticker{padding:5px 0;font-size:10.5px}
   .shell{padding:9px 14px calc(9px + env(safe-area-inset-bottom))}
   .content{gap:9px;padding:6px 0 2px}
-  .badge{font-size:10.5px;padding:4px 11px}
-  h1{font-size:20px;margin-top:8px}
-  .sub{font-size:12px;line-height:1.35;margin-top:7px}
+  .sub{font-size:13px;line-height:1.36;margin-top:7px}
   .scarce{margin-top:7px}
-  .card{padding:12px 13px}
+  .card{padding:11px}
   .field{margin-top:5px}
-  .field input{padding:10px 12px}
-  .btn{padding:11px 20px}
-  .btn-block{margin-top:8px}
-  .trust{margin-top:5px;font-size:10.5px}
+  .btn{padding:12px 20px;font-size:15.5px}
+  .btn-block{margin-top:9px}
+  .trust{margin-top:5px;font-size:11px}
 }
 
 /* ---------- паст ойна (десктоп тартиб): заҳира сиқиш ---------- */
@@ -213,14 +225,14 @@ h1 em{font-style:italic;color:var(--gold-ink)}
 </head>
 <body>
 
-<div class="bg"><img src="assets/courtyard.jpg" alt="Poytaxt Residence — ички ҳовли, боғ ва фонтан" fetchpriority="high"></div>
-
 <!-- тепадаги айланма лента: қулайликлар. Узлуксиз айланиши учун рўйхат икки марта такрорланади -->
 <div class="ticker" aria-label="Мажмуа қулайликлари">
   <div class="ticker__track">
     <span>• 60 ойгача фоизсиз бўлиб тўлаш</span><span>• Мактаб ва боғча яқин</span><span>• Машина кирмайдиган ҳовли</span><span>• Ер ости автотураргоҳ</span><span>• Ҳужжатлар тўлиқ</span><span>• Дўкон ва дорихона бино остида</span><span>• 60 ойгача фоизсиз бўлиб тўлаш</span><span>• Мактаб ва боғча яқин</span><span>• Машина кирмайдиган ҳовли</span><span>• Ер ости автотураргоҳ</span><span>• Ҳужжатлар тўлиқ</span><span>• Дўкон ва дорихона бино остида</span>
   </div>
 </div>
+
+<div class="bg"><img src="assets/courtyard.jpg" alt="Poytaxt Residence — ички ҳовли, боғ ва болалар майдончаси" fetchpriority="high"></div>
 
 <main class="shell">
 
@@ -239,7 +251,6 @@ h1 em{font-style:italic;color:var(--gold-ink)}
     <div class="col">
       <div class="card in" id="card" style="animation-delay:.3s">
         <div class="form-body">
-          <h2>Чегирмани ўзингизга банд қилинг</h2>
           <form id="leadForm" novalidate>
             <div class="field">
               <label for="name">Исмингиз</label>
