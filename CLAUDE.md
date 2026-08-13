@@ -35,7 +35,11 @@ leveri (formaga scroll qilish oqimi odatda 30–50% yo'qotadi).
 
 ## Til va uslub
 - Sayt matni **kirill** alifbosida (uz-Cyrl).
-- Dizayn: premium/luxury — to'q navy fon (#0C111C) + oltin aksent (#DCB867).
+- Dizayn: **iliq va ochiq** — krem fon (`#FAF6EF`) + oltin aksent (`#C9A227`).
+  2026-08-12 da to'q navy palitradan o'tildi.
+  ⚠️ Ochiq fonda oltin **matn** kontrasti yetmaydi, shuning uchun ikkita token bor:
+  `--gold` (badge/tugma to'ldirishi uchun) va `--gold-ink` (`#8A6B12`, oltin matn uchun).
+  Rang o'zgartirilsa kontrast qayta o'lchansin — barcha matn ≥4.5:1 bo'lishi kerak.
 - Shriftlar: Cormorant (sarlavhalar), Manrope (matn).
 - **Emoji ishlatilmaydi** — premium brend uchun arzonlashtiradi.
 - **Sahifada faqat BITTA narsa tugmaga o'xshaydi** — oltin «Чегирмани банд қилиш».
@@ -45,7 +49,7 @@ leveri (formaga scroll qilish oqimi odatda 30–50% yo'qotadi).
 ```
 poytaxt-residence/
 ├── index.html          # Butun sayt (HTML+CSS+JS bitta faylda)
-├── assets/             # Renderlar. Faqat hero.jpg ishlatiladi (fon).
+├── assets/             # Renderlar. Faqat courtyard.jpg ishlatiladi (fon).
 │                       #   Qolgan 5 tasi hozir ishlatilmaydi — pastga qara.
 ├── api/bot.js          # Telegram bot webhook (Vercel serverless)
 ├── apps-script/Code.gs # Google Apps Script — formani Sheets'ga yozadi
@@ -62,7 +66,7 @@ Bir ekranli tartib (yuqoridan pastga):
 > **Galereya modali olib tashlangan** (2026-08-12). «Лойиҳани кўриш» tugmasi kerak
 > emas edi, u esa modalni ochadigan yagona joy edi — shuning uchun modal HTML/CSS va
 > ~35 qator JS ham o'chirildi. `assets/` dagi 5 ta galereya rasmi joyida qoldi, lekin
-> **sahifada ishlatilmaydi**: faqat `hero.jpg` fon sifatida yuklanadi.
+> **sahifada ishlatilmaydi**: faqat `courtyard.jpg` fon sifatida yuklanadi.
 > Galereya qaytadan kerak bo'lsa, git tarixidan olish mumkin (`00c6c21` dan oldingi).
 
 > Sahifada **logotip/brend qatori yo'q** — ataylab olib tashlangan. Brend nomi faqat
@@ -114,6 +118,16 @@ yaratib bo'lmaydi.
 - `text-wrap:balance` H1 qatorlarini tenglaydi — «хонадон —» kabi yolg'iz bo'lak
   qolmaydi. H1 ga `max-width` mobilda **qo'yilmaydi** (torayib qator sonini oshiradi),
   faqat desktopda `20ch`.
+- **Fon rasmi `transform: scale()` bilan yaqinlashtirilgan.** Portret ekranda
+  `object-fit:cover` rasmning butun balandligini ko'rsatadi, shuning uchun
+  `object-position` vertikal bo'yicha umuman ishlamaydi — kadrni tanlash uchun
+  yagona yo'l scale + `transform-origin`. Mobilda `scale(1.44)`/origin `50% 66%`
+  (hovli, bog', odamlar), desktopda yaqinlashtirish kerak emas (`zoomDesk`).
+  `.bg` da `overflow:hidden` **shart**, aks holda kattalashtirilgan rasm toshib chiqadi.
+- **Balandlikni o'lchashda kirish animatsiyasini yakunlang.** `.in` elementlari
+  `translateY(14px)` dan boshlanadi; brauzer paneli yashiringanda animatsiya
+  to'xtab qoladi va soxta 3px overflow ko'rsatadi. To'g'ri o'lchash:
+  `document.querySelectorAll('.in').forEach(el=>el.getAnimations().forEach(a=>a.finish()))`
 - Matn o'zgartirilsa **balandlik qayta tekshirilishi shart**. Tekshirish usuli:
   `document.documentElement.scrollHeight - innerHeight` = 0 bo'lishi kerak.
   O'lchamlar: 360×640, 375×667, 390×844, 768×1024, 900×540, 1280×720, 1440×900.
